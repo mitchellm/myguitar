@@ -15,7 +15,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!-- grow -->
         <div class="grow">
             <div class="container">
-                <h2>Single</h2>
+                <h2>Single (Mock information/data for now)</h2>
             </div>
         </div>
         <!-- grow -->
