@@ -57,22 +57,34 @@
                     <li><a class="color1" href="products.php">PRODUCTS</a>
                         <div class="mepanel">
                             <div class="row">
-                                <div class="col1">
-                                    <div class="h_nav">
-                                        <ul>
-                                            <?php
-                                            $products = $session->getProductList();
-                                            foreach ($products as $val) {
-                                            ?>
-                                            <li><a href="single.php?prod=<?php echo $val[1] ?>"><?php echo $val[0] ?></a></li>
-                                            <?php } ?>
-                                        </ul>
-                                    </div>												
-                                </div>
+                                <?php
+                                $products = $session->getProductList();
+                                $count = count($products);
+                                $factor = ceil($count / 3);
+                                $chunk = array_chunk($products, $factor);
+                                foreach ($chunk as $piece) {
+                                    ?>
+                                    <div class="col1">
+                                        <div class="h_nav">
+                                            <ul>
+                                                <?php
+                                                for ($i = 0; $i < count($piece); $i++) {
+                                                    ?>
+                                                    <li><a href="products.php?prodid=<?php echo $piece[$i][1]; ?>"><?php echo $piece[$i][0]; ?></a></li>
+                                                    <?php
+                                                }
+                                                ?>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </li>	
-<?php if (!$session->isLoggedIn()) { ?>
+                    <?php if (!$session->isLoggedIn()) { ?>
                         <li><a class="color4" href="login.php">Login</a></li>	
                         <li><a class="color4" href="register.php">Register</a></li>				
                     <?php } else { ?>
@@ -80,7 +92,7 @@
                     <?php } ?>
                     <?php if ($session->isLoggedIn()) { ?> 
                         <li><a class="color4" href="logout.php">Logout</a></li>
-<?php } ?>
+                    <?php } ?>
                     <li><a class="color6" href="contact.php">Contact</a></li>
                 </ul> 
             </div>
