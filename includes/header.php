@@ -64,7 +64,7 @@
                                             $products = $session->getProductList();
                                             foreach ($products as $val) {
                                             ?>
-                                            <li><a href="products.php?prod=<?php echo $val[1] ?>"><?php echo $val[0] ?></a></li>
+                                            <li><a href="single.php?prod=<?php echo $val[1] ?>"><?php echo $val[0] ?></a></li>
                                             <?php } ?>
                                         </ul>
                                     </div>												

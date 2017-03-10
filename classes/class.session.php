@@ -269,6 +269,45 @@ class Session extends Util {
         return $return;
     }
     
+    /**
+     * fetchProducts
+     * @return array(image path, productid, productname, description, listprice)
+     */
+    function fetchProducts() {
+        $return = array();
+        $mysqli = $this->db->prepare("SELECT `image`, `ProductID`, `ProductName`, `Description`, `ListPrice` FROM `Products` WHERE `image` IS NOT NULL");
+        $mysqli->bind_result($image, $productid, $productname, $description, $listprice);
+        $mysqli->execute();
+        while($mysqli->fetch()) {
+            array_push($return, array($image, $productid, $productname, $description, $listprice));
+        }
+        return $return;
+    }
+    
+    /**
+     * return array(image, prodID, price)
+     */
+    function fetchRecent() {
+        $return = array();
+        $mysqli = $this->db->prepare("Select products.productname, products.image, orderitems.ProductID, products.ListPrice "
+                . "FROM products "
+                . "LEFT JOIN orderitems "
+                . "ON orderitems.ProductID = products.ProductID "
+                . "WHERE orderitems.orderID IS NOT NULL "
+                . "ORDER BY orderitems.OrderID "
+                . "LIMIT 4");
+        $mysqli->bind_result($name, $image,$prodid,$price);
+        $mysqli->execute();
+        while($mysqli->fetch()) {
+            array_push($return, array($image, $prodid, $price, $name));
+        }
+        return $return;
+    }
+    
+    /**
+     * getProductList
+     * @return array(productname, productid)
+     */
     function getProductList() {
         $return = array();
         $mysqli = $this->db->prepare("SELECT `ProductName`, `ProductID` FROM `Products`");

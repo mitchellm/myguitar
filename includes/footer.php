@@ -1,4 +1,4 @@
-<div class="footer w3layouts">
+<div style="margin-top:150px;" class="footer w3layouts">
     <div class="container">
         <div class="footer-top-at w3">
 

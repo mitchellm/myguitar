@@ -116,62 +116,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="content-top">
                         <h1>RECENTLY PURCHASED</h1>
                         <div class="grid-in">
+                            <?php
+                            $recent = $session->fetchRecent();
+                            for($i = 0; $i< count($recent); $i++) {
+                                $image = $recent[$i][0];
+                                $prodid = $recent[$i][1];
+                                $price = $recent[$i][2];
+                                $prodname = $recent[$i][3];
+                            ?>
                             <div class="col-md-3 grid-top simpleCart_shelfItem">
-                                <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/slade.jpg" alt="">
+                                <a href="single.php?prodid=<?php echo $prodid; ?>" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="<?php echo $image; ?>" alt="">
                                     <div class="b-wrapper">
                                         <h3 class="b-animate b-from-left    b-delay03 ">
-                                            <span>SLADE CLARINET</span>
+                                            <span><?php echo $prodname; ?></span>
 
                                         </h3>
                                     </div>
                                 </a>
-
-
-                                <p><a href="single.php">SLADE CLARINET</a></p>
-                                <a href="addcart.php?prodid=1" class="item_add"><p class="number item_price"><i> </i>$699.00</p></a>
+                                <p><a href="single.php?prodid=<?php echo $prodid; ?>"><?php echo $prodname; ?></a></p>
+                                <a href="addcart.php?prodid=<?php echo $prodid; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $price; ?></p></a>
                             </div>
-                            <div class="col-md-3 grid-top simpleCart_shelfItem">
-                                <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/slade.jpg" alt="">
-                                    <div class="b-wrapper">
-                                        <h3 class="b-animate b-from-left    b-delay03 ">
-                                            <span>SLADE CLARINET</span>
-
-                                        </h3>
-                                    </div>
-                                </a>
-
-
-                                <p><a href="single.php">SLADE CLARINET</a></p>
-                                <a href="addcart.php?prodid=1" class="item_add"><p class="number item_price"><i> </i>$699.00</p></a>
-                            </div>
-                            <div class="col-md-3 grid-top simpleCart_shelfItem">
-                                <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/slade.jpg" alt="">
-                                    <div class="b-wrapper">
-                                        <h3 class="b-animate b-from-left    b-delay03 ">
-                                            <span>SLADE CLARINET</span>
-
-                                        </h3>
-                                    </div>
-                                </a>
-
-
-                                <p><a href="single.php">SLADE CLARINET</a></p>
-                                <a href="addcart.php?prodid=1" class="item_add"><p class="number item_price"><i> </i>$699.00</p></a>
-                            </div>
-                            <div class="col-md-3 grid-top simpleCart_shelfItem">
-                                <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/slade.jpg" alt="">
-                                    <div class="b-wrapper">
-                                        <h3 class="b-animate b-from-left    b-delay03 ">
-                                            <span>SLADE CLARINET</span>
-
-                                        </h3>
-                                    </div>
-                                </a>
-
-
-                                <p><a href="single.php">SLADE CLARINET</a></p>
-                                <a href="addcart.php?prodid=1" class="item_add"><p class="number item_price"><i> </i>$699.00</p></a>
-                            </div>
+                            <?php
+                            }
+                            ?>
                             <div class="clearfix"> </div>
                         </div>
                     </div>
