@@ -89,6 +89,18 @@ class Session extends Util {
             $this->registered = true;
         }
     }
+    
+    function isAdministrator() {
+        $stmt = $this->db->prepare("SELECT * FROM Administrators WHERE EmailAddress = ?");
+        $stmt->bind_param("s", $_SESSION['username']);
+        $stmt->execute();
+        $stmt->store_result();
+        if($stmt->num_rows>0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     /**
      *

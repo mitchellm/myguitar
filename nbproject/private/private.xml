@@ -5,14 +5,22 @@
             <url>classes/class.session.php</url>
             <bookmark id="1">
                 <name/>
-                <line>301</line>
+                <line>315</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/xampp/htdocs/myguitar/classes/class.session.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/products.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/includes/header.php</file>
             <file>file:/C:/xampp/htdocs/myguitar/single.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/checkout.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/sql/myguitarshop%20(1).sql</file>
+            <file>file:/C:/xampp/htdocs/myguitar/includes/footer.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/contact.php</file>
+            <file>file:/C:/xampp/htdocs/myguitar/classes/class.util.php</file>
         </group>
     </open-files>
 </project-private>
