@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2017 at 12:49 AM
+-- Generation Time: Apr 06, 2017 at 12:26 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -45,9 +45,35 @@ CREATE TABLE `addresses` (
 --
 
 CREATE TABLE `administrators` (
-  `AdminID` int(11) NOT NULL,
   `EmailAddress` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `administrators`
+--
+
+INSERT INTO `administrators` (`EmailAddress`) VALUES
+('mitchell.murphy96@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banner_news`
+--
+
+CREATE TABLE `banner_news` (
+  `title` varchar(255) NOT NULL,
+  `body` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `banner_news`
+--
+
+INSERT INTO `banner_news` (`title`, `body`) VALUES
+('Sed ut perspiciatis', 'Lorem Ipsum is not simply random text. Contrary to popular belief, It has roots in a piece of classical Latin literature from 45 BC.'),
+('There are many', 'Popular belief Contrary to , Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.'),
+('Lorem Ipsum is', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.');
 
 -- --------------------------------------------------------
 
@@ -85,6 +111,14 @@ CREATE TABLE `customers` (
   `ShippingAddressID` int(11) DEFAULT NULL,
   `BillingAddressID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, `LastName`, `ShippingAddressID`, `BillingAddressID`) VALUES
+(1, 'mitchell.murphy96@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell', NULL, NULL),
+(2, 'm2@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,8 +252,10 @@ CREATE TABLE `sessions` (
 
 INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
 ('3caf776b5b55016e7af2db2804ffd282', '1488307047', 1488307047, 8),
+('52ad50391f302e99c32016ee0a211d84', '1491432916', 1491432916, 1),
 ('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
-('6cd8e458671c760359ee5770b0274836', '1488192052', 1488192052, 0),
+('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
+('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
 ('b4b1302393fc29bfacfb4f0a4ad3ece0', '1488193608', 1488193608, 6),
 ('d421dbd5d96633c2300850e4d92d63d6', '1491347146', 1491347146, 5),
 ('df3929a2c45ffd615373a0fbfd03488b', '1488306690', 1488306690, 7);
@@ -239,7 +275,7 @@ ALTER TABLE `addresses`
 -- Indexes for table `administrators`
 --
 ALTER TABLE `administrators`
-  ADD PRIMARY KEY (`AdminID`),
+  ADD UNIQUE KEY `EmailAddress_2` (`EmailAddress`),
   ADD KEY `EmailAddress` (`EmailAddress`);
 
 --
@@ -290,15 +326,10 @@ ALTER TABLE `sessions`
 --
 
 --
--- AUTO_INCREMENT for table `administrators`
---
-ALTER TABLE `administrators`
-  MODIFY `AdminID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

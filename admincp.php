@@ -13,7 +13,8 @@
             if (!$session->isLoggedIn())
                 Utility::redirect("login.php");
             else
-                die("No permissions to access | Account logged into is NOT listed as administrator in database");
+                die("No permissions to access | Account logged into is NOT listed as administrator in database."
+                    . "<br /><a href=\"index.php\">Return home</a>");
         ?>
         
         <style type="text/css">
