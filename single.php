@@ -13,10 +13,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <!--header-->
         <?php require_once('includes/header.php'); ?>
         <?php
-        if(!isset($_GET['product'])) {
+        if (!isset($_GET['product'])) {
             $session->redirect("index.php");
         }
-        
+
         $productInformation = $store->fetchProduct($_GET['product']);
         $productname = $productInformation[1];
         $description = $productInformation[2];
@@ -53,12 +53,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <ul class="slides">
                                     <?php
                                     $images = $store->getDisplays();
-                                    for($i = 0; $i < 4; $i++) {
-                                    ?>
-                                    <li data-thumb="<?php echo $images[$i]; ?>">
-                                        <div class="thumb-image"> <img src="<?php echo $images[$i]; ?>" data-imagezoom="true" class="img-responsive"> </div>
-                                    </li>                                    
-                                    <?php
+                                    for ($i = 0; $i < 4; $i++) {
+                                        ?>
+                                        <li data-thumb="<?php echo $images[$i]; ?>">
+                                            <div class="thumb-image"> <img src="<?php echo $images[$i]; ?>" data-imagezoom="true" class="img-responsive"> </div>
+                                        </li>                                    
+                                        <?php
                                     }
                                     ?>
                                 </ul>
@@ -69,7 +69,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <h4><?php echo $productname; ?></h4>
                                 <h5 class="item_price">$ <?php echo $price; ?></h5>
                                 <p>
-                                <?php print_r($description); ?>
+                                    <?php print_r($description); ?>
                                 </p>
                                 <br />
                                 <a href="addcart.php?product=<?php echo $productid; ?>" class="add-cart item_add">ADD TO CART</a>
@@ -78,30 +78,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                     </div>
                     <!---->
-<?php /*
-                    <div class=" bottom-product">
-                        <?php
-                        $products = $store->fetchNProducts(3);
-                        for ($i = 0; $i < count($products); $i++) {
-                            //            array_push($return, array($image, $productid, $productname, $description, $listprice));
-                            ?>
-                            <div class="col-md-4 bottom-cd simpleCart_shelfItem">
-                                <div class="product-at ">
-                                    <a href="single.php?product=<?php echo $products[$i][1];?>"><img class="img-responsive" src="<?php echo $products[$i][0]; ?>" alt="a">
-                                        <div class="pro-grid">
-                                            <span class="buy-in">Buy Now</span>
-                                        </div>
-                                    </a>	
-                                </div>
-                                <p class="tun"><span><?php echo $products[$i][2]; ?></span><br>CLARISSA</p>
-                                <div class="ca-rt">
-                                    <a href="addcart.php?product=<?php echo $products[$i][1]; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $products[$i][4]; ?></p></a>						
-                                </div>						
-                            </div>
-                        <?php } ?>
-                        <div class="clearfix"> </div>
-                    </div>
-                    */ ?>
+                    <?php /*
+                      <div class=" bottom-product">
+                      <?php
+                      $products = $store->fetchNProducts(3);
+                      for ($i = 0; $i < count($products); $i++) {
+                      //            array_push($return, array($image, $productid, $productname, $description, $listprice));
+                      ?>
+                      <div class="col-md-4 bottom-cd simpleCart_shelfItem">
+                      <div class="product-at ">
+                      <a href="single.php?product=<?php echo $products[$i][1];?>"><img class="img-responsive" src="<?php echo $products[$i][0]; ?>" alt="a">
+                      <div class="pro-grid">
+                      <span class="buy-in">Buy Now</span>
+                      </div>
+                      </a>
+                      </div>
+                      <p class="tun"><span><?php echo $products[$i][2]; ?></span><br>CLARISSA</p>
+                      <div class="ca-rt">
+                      <a href="addcart.php?product=<?php echo $products[$i][1]; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $products[$i][4]; ?></p></a>
+                      </div>
+                      </div>
+                      <?php } ?>
+                      <div class="clearfix"> </div>
+                      </div>
+                     */ ?>
                 </div>
             </div>
         </div>

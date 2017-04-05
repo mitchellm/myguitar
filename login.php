@@ -24,23 +24,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="account">
                 <div class="account-pass">
                     <div class="col-md-8 account-top">
-                        <?php
-                        if(!isset($_POST['submit'])) { ?>
-                        <form action="login.php" method="post">
+                        <?php if (!isset($_POST['submit'])) { ?>
+                            <form action="login.php" method="post">
 
-                            <div> 	
-                                <span>Email</span>
-                                <input name="email" type="text"> 
-                            </div>
-                            <div> 
-                                <span >Password</span>
-                                <input name="password" type="password">
-                            </div>				
-                            <input name="submit" type="submit" value="Login"> 
-                        </form>
-                        <?php
+                                <div> 	
+                                    <span>Email</span>
+                                    <input name="email" type="text"> 
+                                </div>
+                                <div> 
+                                    <span >Password</span>
+                                    <input name="password" type="password">
+                                </div>				
+                                <input name="submit" type="submit" value="Login"> 
+                            </form>
+                            <?php
                         } else {
-                            if($session->login($_POST['email'], $_POST['password'])) {
+                            if ($session->login($_POST['email'], $_POST['password'])) {
                                 $session->redirect('./index.php');
                             }
                         }

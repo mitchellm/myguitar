@@ -68,7 +68,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
         </div>
         <!--//content-->
-<?php require_once('includes/footer.php'); ?>
+        <?php require_once('includes/footer.php'); ?>
     </body>
 </html>
 <?php

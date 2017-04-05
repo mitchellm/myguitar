@@ -8,8 +8,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
     <script>
         $(document).ready(function({
-            simpleCart.each();  
-        }));
+        simpleCart.each();
+        }
+        ));
     </script>
     <head>
         <?php require_once('includes/head_imports_meta.php') ?>
@@ -29,32 +30,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="col-md-9 cart-items">
                     <?php
                     $cartItems = $store->getCart();
-                    if(count($cartItems) < 1) {
+                    if (count($cartItems) < 1) {
                         echo "<font size=\"5\">No items in cart, check out our products in the top-left navbar (under cart total) and featured listings available on our home page!</font>";
                     }
-                    foreach($cartItems as $key => $item) {
-                    ?>
-                    <div class="cart-header2">
-                        <div class="cart-sec simpleCart_shelfItem">
-                            <div class="cart-item cyc">
-                                <img src="images/stock_product.jpg" class="img-responsive" alt=""/>
+                    foreach ($cartItems as $key => $item) {
+                        ?>
+                        <div class="cart-header2">
+                            <div class="cart-sec simpleCart_shelfItem">
+                                <div class="cart-item cyc">
+                                    <img src="images/stock_product.jpg" class="img-responsive" alt=""/>
+                                </div>
+                                <div class="cart-item-info">
+                                    <h3><a href="#"><?php echo $item[1]; ?></a><span><?php echo $item[2]; ?></span></h3>
+                                    <ul class="qty">
+                                        <li><p>Qty : <?php echo $item[3]; ?></p></li>
+                                        <li><p><a href="removecart.php?all=true&prodid=<?php echo $key ?>">Remove all</a></p></li>
+                                        <li><p>Remove x <form action="removecart.php" method="post"><input type="number" min="1" max="<?php echo $item[3]; ?>" name="amount" /><input type="hidden" name="prodid" value="<?php echo $key ?>" /><input type="submit" name="removex" /></form></p></li>
+                                    </ul>
+                                    <div class="delivery">
+                                        <p>Service Charges : Free</p>
+                                        <span>Delivered in 2-3 business days</span>
+                                        <div class="clearfix"></div>
+                                    </div>	
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="cart-item-info">
-                                <h3><a href="#"><?php echo $item[1]; ?></a><span><?php echo $item[2]; ?></span></h3>
-                                <ul class="qty">
-                                    <li><p>Qty : <?php echo $item[3]; ?></p></li>
-                                    <li><p><a href="removecart.php?all=true&prodid=<?php echo $key ?>">Remove all</a></p></li>
-                                    <li><p>Remove x <form action="removecart.php" method="post"><input type="number" min="1" max="<?php echo $item[3]; ?>" name="amount" /><input type="hidden" name="prodid" value="<?php echo $key ?>" /><input type="submit" name="removex" /></form></p></li>
-                                </ul>
-                                <div class="delivery">
-                                    <p>Service Charges : Free</p>
-                                    <span>Delivered in 2-3 business days</span>
-                                    <div class="clearfix"></div>
-                                </div>	
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
-                    </div>
                     <?php } ?>
                 </div>
                 <div class="col-md-3 cart-total">
@@ -62,9 +63,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="price-details">
                         <h3>Price Details</h3>
                         <span>Total</span>
-                        <span class="total1"><?php echo number_format($store->getCartTotal(),2); ?></span>
+                        <span class="total1"><?php echo number_format($store->getCartTotal(), 2); ?></span>
                         <span>Taxes (7% sales tax)</span>
-                        <span class="total1"><?php echo $store->getCartTotal()*.07; ?> </span>
+                        <span class="total1"><?php echo $store->getCartTotal() * .07; ?> </span>
                         <span>Discount</span>
                         <span class="total1">---</span>
                         <span>Delivery Charges</span>
@@ -73,7 +74,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>	
                     <ul class="total_price">
                         <li class="last_price"> <h4>TOTAL</h4></li>	
-                        <li class="last_price"><span><?php echo number_format($store->getCartTotal() + $store->getCartTotal()*.07,2); ?></span></li>
+                        <li class="last_price"><span><?php echo number_format($store->getCartTotal() + $store->getCartTotal() * .07, 2); ?></span></li>
                     </ul>
                     <div class="clearfix"></div>
                     <a class="order" href="#">Place Order</a>

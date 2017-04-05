@@ -3,8 +3,9 @@
 require_once __DIR__ . '/class.session.php';
 
 class Store extends Session {
+
     private $db;
-   
+
     /**
      *
      * Checks if the user is logged in, if he is, it will make sure the session hasn't expired.
@@ -12,77 +13,77 @@ class Store extends Session {
     function __construct() {
         $this->db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     }
-    
+
     function fetchBanners() {
         $return = array();
         $stmt = $this->db->prepare("SELECT `title`, `body` FROM banner_news");
-        $stmt->bind_result($title,$body);
+        $stmt->bind_result($title, $body);
         $stmt->store_result();
         $stmt->execute();
-        while($stmt->fetch()) {
+        while ($stmt->fetch()) {
             array_push($return, array('title' => $title, 'body' => $body));
         }
         return $return;
     }
-    
+
     function addToCart($prodID) {
-        if(isset($_SESSION['cart'][$prodID])) {
-            $_SESSION['cart'][$prodID]++;
+        if (isset($_SESSION['cart'][$prodID])) {
+            $_SESSION['cart'][$prodID] ++;
         } else {
             $_SESSION['cart'][$prodID] = 1;
         }
     }
-     
+
     function removeCart($prodID, $quantity, $all = false) {
-        if(isset($_SESSION['cart'][$prodID])) {
-            if(!$all) {
+        if (isset($_SESSION['cart'][$prodID])) {
+            if (!$all) {
                 $_SESSION['cart'][$prodID] = $_SESSION['cart'][$prodID] - $quantity;
-                if($_SESSION['cart'][$prodID] < 1)
+                if ($_SESSION['cart'][$prodID] < 1)
                     unset($_SESSION['cart'][$prodID]);
             } else {
                 unset($_SESSION['cart'][$prodID]);
             }
         }
     }
-    
+
     function emptyCart() {
-        if(isset($_SESSION['cart'])) {
+        if (isset($_SESSION['cart'])) {
             unset($_SESSION['cart']);
         }
     }
-    
+
     function getCartTotal() {
         $totalprice = 0;
-        if(isset($_SESSION['cart'])) {
-            foreach($_SESSION['cart'] as $key => $val) {
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $key => $val) {
                 $mysqli = $this->db->prepare("SELECT `ListPrice` FROM `Products` WHERE `ProductID` = ?");
                 $mysqli->bind_param("i", $key);
                 $mysqli->bind_result($price);
                 $mysqli->execute();
-                while($mysqli->fetch()) {
-                    $totalprice+=($price) * $val;
+                while ($mysqli->fetch()) {
+                    $totalprice += ($price) * $val;
                 }
             }
         }
         return $totalprice;
     }
-    
+
     function getCart() {
         $return = array();
-        if(isset($_SESSION['cart'])) {
-            foreach($_SESSION['cart'] as $item => $quantity) {
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item => $quantity) {
                 $mysqli = $this->db->prepare("SELECT `ListPrice`, `ProductName`, `Description`, `ProductCode` FROM `Products` WHERE `ProductID` = ?");
                 $mysqli->bind_param("i", $item);
-                $mysqli->bind_result($price,$name,$description,$productcode);
+                $mysqli->bind_result($price, $name, $description, $productcode);
                 $mysqli->execute();
-                while($mysqli->fetch()) {
-                    $return[$item] = array($price,$name,$description,$quantity,$productcode);
+                while ($mysqli->fetch()) {
+                    $return[$item] = array($price, $name, $description, $quantity, $productcode);
                 }
             }
         }
         return $return;
     }
-    
+
     /**
      * fetchProducts
      * @return array(image path, productid, productname, description, listprice)
@@ -92,12 +93,12 @@ class Store extends Session {
         $mysqli = $this->db->prepare("SELECT `image`, `ProductID`, `ProductName`, `Description`, `ListPrice` FROM `Products` WHERE `image` IS NOT NULL");
         $mysqli->bind_result($image, $productid, $productname, $description, $listprice);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             array_push($return, array($image, $productid, $productname, $description, $listprice));
         }
         return $return;
     }
-    
+
     /**
      * Fetches information about specific product
      */
@@ -107,11 +108,11 @@ class Store extends Session {
         $mysqli->bind_result($productID, $productname, $description, $listprice);
         $mysqli->bind_param("i", $product_id);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             return array($productID, $productname, $description, $listprice);
         }
     }
-    
+
     /**
      * fetchProducts
      * @return array(image path, productid, productname, description, listprice)
@@ -122,12 +123,12 @@ class Store extends Session {
         $mysqli->bind_result($image, $productid, $productname, $description, $listprice);
         $mysqli->bind_param("i", $n);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             array_push($return, array($image, $productid, $productname, $description, $listprice));
         }
         return $return;
     }
-    
+
     /**
      * return array(image, prodID, price)
      */
@@ -140,14 +141,14 @@ class Store extends Session {
                 . "WHERE orderitems.orderID IS NOT NULL "
                 . "ORDER BY orderitems.OrderID "
                 . "LIMIT 4");
-        $mysqli->bind_result($name, $image,$prodid,$price);
+        $mysqli->bind_result($name, $image, $prodid, $price);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             array_push($return, array($image, $prodid, $price, $name));
         }
         return $return;
     }
-    
+
     /**
      * getProductList
      * @return array(productname, productid)
@@ -157,12 +158,12 @@ class Store extends Session {
         $mysqli = $this->db->prepare("SELECT `ProductName`, `ProductID` FROM `Products`");
         $mysqli->bind_result($productname, $productid);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             array_push($return, array($productname, $productid));
         }
         return $return;
     }
-    
+
     /**
      * Fetch display pictures (potentially random, purely for display)
      */
@@ -171,10 +172,10 @@ class Store extends Session {
         $mysqli = $this->db->prepare("SELECT image FROM Products");
         $mysqli->bind_result($image);
         $mysqli->execute();
-        while($mysqli->fetch()) {
+        while ($mysqli->fetch()) {
             array_push($return, $image);
         }
         return $return;
     }
-}
 
+}

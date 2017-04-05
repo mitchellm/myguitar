@@ -32,7 +32,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     }">
 
                             <input type="text" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {
-                                        this.value = 'Email';}">
+                                        this.value = 'Email';
+                                    }">
                             <input type="text" value="Subject" onfocus="this.value = '';" onblur="if (this.value == '') {
                                         this.value = 'Subject';
                                     }">

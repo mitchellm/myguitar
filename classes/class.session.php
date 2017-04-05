@@ -89,13 +89,13 @@ class Session extends Util {
             $this->registered = true;
         }
     }
-    
+
     function isAdministrator() {
         $stmt = $this->db->prepare("SELECT * FROM Administrators WHERE EmailAddress = ?");
         $stmt->bind_param("s", $_SESSION['username']);
         $stmt->execute();
         $stmt->store_result();
-        if($stmt->num_rows>0) {
+        if ($stmt->num_rows > 0) {
             return true;
         } else {
             return false;
@@ -106,7 +106,7 @@ class Session extends Util {
         $user = htmlspecialchars(mysqli_real_escape_string($this->db, $user));
         $pass = Util::secureHash($pass);
         //die($this->attemptLogin($user, $pass) ? 'true' : 'false');
-        if($this->attemptLogin($user, $pass)) {
+        if ($this->attemptLogin($user, $pass)) {
             /* VALID INFO, SET SESSION */
             $this->setSession($user);
             return true;
@@ -117,7 +117,7 @@ class Session extends Util {
             return false;
         }
     }
-    
+
     /**
      *
      * Validates a username and password, returns based on success or failure
@@ -152,7 +152,7 @@ class Session extends Util {
         if ($stmt->num_rows >= 1) {
             $this->db->query("DELETE FROM sessions WHERE uid='{$data['CustomerID']}'");
         }
-        
+
         $sid = Util::generateRandID(16);
         $timestamp = time() + 60 * SESSION_LENGTH;
         $this->db->query("INSERT INTO `sessions` (`uid`,`sid`,`timestamp`) VALUES ('{$data['CustomerID']}', '{$sid}', '{$timestamp}')");
@@ -218,7 +218,7 @@ class Session extends Util {
         }
         return substr($random, 0, $length);
     }
-    
+
     /**
      * Checks if user is logged in
      * @return boolean
@@ -229,7 +229,7 @@ class Session extends Util {
         }
         return false;
     }
-    
+
     /**
      *
      * Checks online users
