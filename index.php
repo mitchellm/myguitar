@@ -64,9 +64,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="cont">
                 <div class="content">
                     <div class="content-top-bottom">
-                        <h2>Featured PRODUCTS</h2>
+                        <h2>COMING SOON PREVIEWS</h2>
                         <div class="col-md-6 men">
-                            <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/t1.jpg" alt="">
+                            <a class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/t1.jpg" alt="">
                                 <div class="b-wrapper">
                                     <h3 class="b-animate b-from-top top-in   b-delay03 ">
                                         <span>VOX MODEL 82 AMP</span>	
@@ -78,7 +78,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                         <div class="col-md-6">
                             <div class="col-md1 ">
-                                <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/rare_spiral.jpg" alt="">
+                                <a class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/rare_spiral.jpg" alt="">
                                     <div class="b-wrapper">
                                         <h3 class="b-animate b-from-top top-in1   b-delay03 ">
                                             <span>Custom Jerry Guitar</span>	
@@ -89,7 +89,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                             <div class="col-md2">
                                 <div class="col-md-6 men1">
-                                    <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/drums.jpg" alt="">
+                                    <a class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/drums.jpg" alt="">
                                         <div class="b-wrapper">
                                             <h3 class="b-animate b-from-top top-in2   b-delay03 ">
                                                 <span>Pearl Jam 5-Piece EXX725/C</span>	
@@ -99,7 +99,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                                 </div>
                                 <div class="col-md-6 men2">
-                                    <a href="single.php" class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/bass_set.jpg" alt="">
+                                    <a class="b-link-stripe b-animate-go  thickbox"><img class="img-responsive" src="images/bass_set.jpg" alt="">
                                         <div class="b-wrapper">
                                             <h3 class="b-animate b-from-top top-in2   b-delay03 ">
                                                 <span>Telecaster Bass Set</span>	
