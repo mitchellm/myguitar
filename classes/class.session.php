@@ -266,6 +266,53 @@ class Session extends Utility {
         }
         return $users;
     }
+    /**
+     *
+     * Checks all users
+     * @return string users
+     */
+    function getAdmins() {
+        $admins = array();
+        $result = $this->db->query("SELECT `EmailAddress` FROM `Administrators`");
+         while ($row = $result->fetch_assoc()) {
+            $admins[] = $row;
+        }
+        return $admins;
+    }
+    
+    
+    function setAdmin($email) {
+        $checkemail = "/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
+        if (!preg_match($checkemail, $email)) {
+            return "E-mail is not valid, must be name@server.tld!";
+        }
+        $this->db->query("INSERT INTO `Administrators` (`EmailAddress`) VALUES ('{$email}')");
+    }
+    
+    function isAdmin($email) {
+        $stmt = $this->db->prepare("SELECT * FROM `administrators` WHERE `EmailAddress` = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+        if ($stmt->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    function removeAdmin($email) {
+        if($email != "mitchell.murphy96@gmail.com") {
+            $checkemail = "/^[a-z0-9]+([_\\.-][a-z0-9]+)*@([a-z0-9]+([\.-][a-z0-9]+)*)+\\.[a-z]{2,}$/i";
+            if (!preg_match($checkemail, $email)) {
+                return "E-mail is not valid, must be name@server.tld!";
+            }
+            $this->db->query("DELETE FROM `Administrators` WHERE `EmailAddress` = ('{$email}')");
+        } else {
+            echo "Could not remove root admin";
+        }
+    }
 
     /**
      *

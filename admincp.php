@@ -102,8 +102,8 @@
     <div class="navbar">
         <ul>
             <li> 
-                <a href="addAdmin.php">
-                    Add Administrator
+                <a href="?request=manageAdmin">
+                    List/Add/Delete Administrators
                 </a>
             </li>
         </ul>

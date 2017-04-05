@@ -60,6 +60,9 @@ if ($allowAccess) {
             <th>
                 DELETE
             </th>
+            <th>
+                MAKE/REMOVE ADMIN
+            </th>
         </tr>
         <?php
         for ($i = 0; $i < $numUsers; $i++) {
@@ -86,6 +89,21 @@ if ($allowAccess) {
                     <td>
                         <a href="#">
                             Click to delete
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            <?php
+                            if ($session->isAdmin($users[$i]['EmailAddress'])) {
+                                ?>
+                                <a href="?request=manageAdmin&delete&email=<?php echo $users[$i]['EmailAddress']; ?>">REMOVE ADMIN</a>
+                                <?php
+                            } else {
+                                ?>
+                                <a href="?request=manageAdmin&add&email=<?php echo $users[$i]['EmailAddress']; ?>">MAKE ADMIN</a>
+                                <?php
+                            }
+                            ?>
                         </a>
                     </td>
                 </tr>

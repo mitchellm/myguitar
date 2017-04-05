@@ -88,7 +88,7 @@
                         <li><a class="color4" href="login.php">Login</a></li>	
                         <li><a class="color4" href="register.php">Register</a></li>				
                     <?php } if ($session->isAdministrator()) { ?>
-                        <li><a class="color4" href="admin.php">Administrator</a></li>	
+                        <li><a class="color4" href="admincp.php">Administrator</a></li>	
                     <?php } ?>
                     <?php if ($session->isLoggedIn()) { ?> 
                         <li><a class="color4" href="logout.php">Logout</a></li>
