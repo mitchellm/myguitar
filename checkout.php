@@ -33,7 +33,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     if (count($cartItems) < 1) {
                         echo "<font size=\"5\">No items in cart, check out our products in the top-left navbar (under cart total) and featured listings available on our home page!</font>";
                     }
-                    foreach ($cartItems as $key => $item) {
+                    foreach ($cartItems as $pID => $item) {
                         ?>
                         <div class="cart-header2">
                             <div class="cart-sec simpleCart_shelfItem">
@@ -44,8 +44,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <h3><a href="#"><?php echo $item[1]; ?></a><span><?php echo $item[2]; ?></span></h3>
                                     <ul class="qty">
                                         <li><p>Qty : <?php echo $item[3]; ?></p></li>
-                                        <li><p><a href="removecart.php?all=true&prodid=<?php echo $key ?>">Remove all</a></p></li>
-                                        <li><p>Remove x <form action="removecart.php" method="post"><input type="number" min="1" max="<?php echo $item[3]; ?>" name="amount" /><input type="hidden" name="prodid" value="<?php echo $key ?>" /><input type="submit" name="removex" /></form></p></li>
+                                        <li><p><a href="removecart.php?all=true&prodid=<?php echo $pID ?>">Remove all</a></p></li>
+                                        <li><p>Remove x <form action="removecart.php" method="post"><input type="number" min="1" max="<?php echo $item[3]; ?>" name="amount" /><input type="hidden" name="product" value="<?php echo $pID ?>" /><input type="submit" name="removex" /></form></p></li>
                                     </ul>
                                     <div class="delivery">
                                         <p>Service Charges : Free</p>

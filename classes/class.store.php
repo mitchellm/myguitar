@@ -128,6 +128,15 @@ class Store extends Session {
         }
         return $return;
     }
+    
+    function fetchOrders() {
+        $orders = array();
+        $result = $this->db->query("SELECT `OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAmount`, `CardNumber` FROM `Orders`");
+         while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        return $users;
+    }
 
     /**
      * return array(image, prodID, price)

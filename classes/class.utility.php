@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../includes/global.php';
 
-class Util {
+class Utility {
 
     private $db;
 

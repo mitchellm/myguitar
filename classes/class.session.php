@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '/class.util.php';
+require_once __DIR__ . '/class.utility.php';
 require_once __DIR__ . '/../includes/global.php';
 
-class Session extends Util {
+class Session extends Utility {
 
     private $db;
     var $registered;
@@ -81,7 +81,7 @@ class Session extends Util {
             $fname = ucfirst($fname);
             $lname = ucfirst($fname);
             $email = strtolower($email);
-            $pass = Util::secureHash($pass);
+            $pass = Utility::secureHash($pass);
             $stmt = $this->db->prepare("INSERT INTO `customers` (`FirstName` ,`LastName` ,`EmailAddress`, `Password`)VALUES (?, ?, ?, ?)");
             $stmt->bind_param("ssss", $fname, $lname, $email, $pass);
             $stmt->execute();
@@ -104,7 +104,7 @@ class Session extends Util {
 
     function login($user, $pass) {
         $user = htmlspecialchars(mysqli_real_escape_string($this->db, $user));
-        $pass = Util::secureHash($pass);
+        $pass = Utility::secureHash($pass);
         //die($this->attemptLogin($user, $pass) ? 'true' : 'false');
         if ($this->attemptLogin($user, $pass)) {
             /* VALID INFO, SET SESSION */
@@ -153,7 +153,7 @@ class Session extends Util {
             $this->db->query("DELETE FROM sessions WHERE uid='{$data['CustomerID']}'");
         }
 
-        $sid = Util::generateRandID(16);
+        $sid = Utility::generateRandID(16);
         $timestamp = time() + 60 * SESSION_LENGTH;
         $this->db->query("INSERT INTO `sessions` (`uid`,`sid`,`timestamp`) VALUES ('{$data['CustomerID']}', '{$sid}', '{$timestamp}')");
         $_SESSION['username'] = $user;
@@ -168,7 +168,7 @@ class Session extends Util {
     function clearSession($sid) {
         $sid = mysqli_real_escape_string($sid);
         $this->db->query("DELETE FROM sessions WHERE sid='{$sid}'");
-        Util::redirect('index.php?notice=You have been logged out! Your session may have expired!');
+        Utility::redirect('index.php?notice=You have been logged out! Your session may have expired!');
         session_destroy();
     }
 
@@ -249,6 +249,20 @@ class Session extends Util {
             }
         } else {
             $users[] = "Nobody is currently logged in!";
+        }
+        return $users;
+    }
+    
+    /**
+     *
+     * Checks all users
+     * @return string users
+     */
+    function getAllUsers() {
+        $users = array();
+        $result = $this->db->query("SELECT `FirstName`, `LastName`, `EmailAddress`, `CustomerID` FROM `customers`");
+         while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
         }
         return $users;
     }
