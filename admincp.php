@@ -1,5 +1,21 @@
 <html>
     <head>
+        <?php
+        require_once 'classes/class.session.php';
+        require_once 'classes/class.store.php';
+        require_once 'includes/global.php';
+
+        $session = new Session();
+        $store = new Store();
+        $allowAccess = true;
+
+        if (!$session->isAdministrator())
+            if (!$session->isLoggedIn())
+                Utility::redirect("login.php");
+            else
+                die("No permissions to access | Account logged into is NOT listed as administrator in database");
+        ?>
+        
         <style type="text/css">
             h1 {
                 text-align: center;
@@ -10,7 +26,7 @@
                 margin-top: 10px;
                 margin-bottom: 10px;
             }
-            
+
             .navbar ul {
                 margin: 0;
                 padding: 0;
@@ -98,7 +114,7 @@
             </li>
         </ul>
     </div>
-    
+
     <div class="navbar">
         <ul>
             <li> 
@@ -111,36 +127,28 @@
 </head>
 <body>
     <div id="content">
-    <?php
-    require_once 'classes/class.session.php';
-    require_once 'classes/class.store.php';
-    require_once 'includes/global.php';
+        <?php
+        foreach ($_GET as $key => $value) {
+            $$key = $_GET[$key];
+        }
+        foreach ($_POST as $key => $value) {
+            $$key = $_POST[$key];
+        }
 
-    $session = new Session();
-    $store = new Store();
-    $allowAccess = true;
+        if (isset($request)) {
+            $command = $request;
+            $toRemove = array("../", ".php", "/", ".");
+            $toReplace = array("", "", "", "");
+            $command = str_replace($toRemove, $toReplace, $command);
 
-    foreach ($_GET as $key => $value) {
-        $$key = $_GET[$key];
-    }
-    foreach ($_POST as $key => $value) {
-        $$key = $_POST[$key];
-    }
-
-    if (isset($request)) {
-        $command = $request;
-        $toRemove = array("../", ".php", "/", ".");
-        $toReplace = array("", "", "", "");
-        $command = str_replace($toRemove, $toReplace, $command);
-
-        if (file_exists('requests/' . $command . '.php'))
-            include 'requests/' . $command . '.php';
-        else
-            printf('Error! Command ' . $command . ' not found');
-    } else {
-        
-    }
-    ?>
+            if (file_exists('requests/' . $command . '.php'))
+                include 'requests/' . $command . '.php';
+            else
+                printf('Error! Command ' . $command . ' not found');
+        } else {
+            
+        }
+        ?>
     </div>
 </body>
 </html>
