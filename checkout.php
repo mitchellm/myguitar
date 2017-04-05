@@ -62,9 +62,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="price-details">
                         <h3>Price Details</h3>
                         <span>Total</span>
-                        <span class="total1"><?php echo number_format($session->getCartTotal(),2); ?></span>
+                        <span class="total1"><?php echo number_format($store->getCartTotal(),2); ?></span>
                         <span>Taxes (7% sales tax)</span>
-                        <span class="total1"><?php echo $session->getCartTotal()*.07; ?> </span>
+                        <span class="total1"><?php echo $store->getCartTotal()*.07; ?> </span>
                         <span>Discount</span>
                         <span class="total1">---</span>
                         <span>Delivery Charges</span>
@@ -73,7 +73,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>	
                     <ul class="total_price">
                         <li class="last_price"> <h4>TOTAL</h4></li>	
-                        <li class="last_price"><span><?php echo number_format($session->getCartTotal() + $session->getCartTotal()*.07,2); ?></span></li>
+                        <li class="last_price"><span><?php echo number_format($store->getCartTotal() + $store->getCartTotal()*.07,2); ?></span></li>
                     </ul>
                     <div class="clearfix"></div>
                     <a class="order" href="#">Place Order</a>
