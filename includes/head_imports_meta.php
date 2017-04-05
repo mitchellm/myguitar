@@ -1,8 +1,10 @@
 <?php
 require_once 'global.php';
 require_once __DIR__ . '/../classes/class.session.php';
+require_once __DIR__ . '/../classes/class.store.php';
 
 $session = new Session();
+$store = new Store();
 ?>
 <title><?php echo STORE_TITLE; ?></title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />

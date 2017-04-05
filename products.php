@@ -24,7 +24,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="container">
                 <div class="col-md-9 product1">
                         <?php
-                        $products = $session->fetchProducts();
+                        $products = $store->fetchProducts();
                         for ($i = 0; $i < count($products); $i+=2) {
                                 $image = $products[$i][0];
                                 $productid = $products[$i][1];

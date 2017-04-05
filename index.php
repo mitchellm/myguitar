@@ -117,7 +117,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <h1>RECENTLY PURCHASED</h1>
                         <div class="grid-in">
                             <?php
-                            $recent = $session->fetchRecent();
+                            $recent = $store->fetchRecent();
                             for($i = 0; $i< count($recent); $i++) {
                                 $image = $recent[$i][0];
                                 $prodid = $recent[$i][1];

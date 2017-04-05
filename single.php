@@ -17,7 +17,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             $session->redirect("index.php");
         }
         
-        $productInformation = $session->fetchProduct($_GET['product']);
+        $productInformation = $store->fetchProduct($_GET['product']);
         $productname = $productInformation[1];
         $description = $productInformation[2];
         $price = $productInformation[3];
@@ -52,7 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <div class="flexslider">
                                 <ul class="slides">
                                     <?php
-                                    $images = $session->getDisplays();
+                                    $images = $store->getDisplays();
                                     for($i = 0; $i < 4; $i++) {
                                     ?>
                                     <li data-thumb="<?php echo $images[$i]; ?>">
@@ -81,7 +81,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <?php /*
                     <div class=" bottom-product">
                         <?php
-                        $products = $session->fetchNProducts(3);
+                        $products = $store->fetchNProducts(3);
                         for ($i = 0; $i < count($products); $i++) {
                             //            array_push($return, array($image, $productid, $productname, $description, $listprice));
                             ?>

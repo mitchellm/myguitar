@@ -34,7 +34,7 @@
                         <a href="checkout.php">
                             <h3> 
                                 <div class="total">
-                                    $<?php echo $session->getCartTotal(); ?>
+                                    $<?php echo $store->getCartTotal(); ?>
                                 </div>
                                 <img src="images/cart.png" alt=""/>
                             </h3>
@@ -58,7 +58,7 @@
                         <div class="mepanel">
                             <div class="row">
                                 <?php
-                                $products = $session->getProductList();
+                                $products = $store->getProductList();
                                 $count = count($products);
                                 $factor = ceil($count / 3);
                                 $chunk = array_chunk($products, $factor);
