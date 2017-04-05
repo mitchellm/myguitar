@@ -13,6 +13,18 @@ class Store extends Session {
         $this->db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     }
     
+    function fetchBanners() {
+        $return = array();
+        $stmt = $this->db->prepare("SELECT `title`, `body` FROM banner_news");
+        $stmt->bind_result($title,$body);
+        $stmt->store_result();
+        $stmt->execute();
+        while($stmt->fetch()) {
+            array_push($return, array('title' => $title, 'body' => $body));
+        }
+        return $return;
+    }
+    
     function addToCart($prodID) {
         if(isset($_SESSION['cart'][$prodID])) {
             $_SESSION['cart'][$prodID]++;

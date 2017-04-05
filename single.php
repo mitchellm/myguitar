@@ -72,7 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <?php print_r($description); ?>
                                 </p>
                                 <br />
-                                <a href="addcart.php?prodid=<?php echo $productid; ?>" class="add-cart item_add">ADD TO CART</a>
+                                <a href="addcart.php?product=<?php echo $productid; ?>" class="add-cart item_add">ADD TO CART</a>
 
                             </div>
                         </div>
@@ -95,7 +95,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 </div>
                                 <p class="tun"><span><?php echo $products[$i][2]; ?></span><br>CLARISSA</p>
                                 <div class="ca-rt">
-                                    <a href="addcart.php?prodid=<?php echo $products[$i][1]; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $products[$i][4]; ?></p></a>						
+                                    <a href="addcart.php?product=<?php echo $products[$i][1]; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $products[$i][4]; ?></p></a>						
                                 </div>						
                             </div>
                         <?php } ?>

@@ -102,6 +102,22 @@ class Session extends Util {
         }
     }
 
+    function login($user, $pass) {
+        $user = htmlspecialchars(mysqli_real_escape_string($this->db, $user));
+        $pass = Util::secureHash($pass);
+        //die($this->attemptLogin($user, $pass) ? 'true' : 'false');
+        if($this->attemptLogin($user, $pass)) {
+            /* VALID INFO, SET SESSION */
+            $this->setSession($user);
+            return true;
+        } else {
+            /* LOGIN FAILED */
+            echo "Failed to login, please try again.";
+            echo "<br />Return to the login form: <a href=\"./login.php\" class=\"boldAnchor\">here</a>";
+            return false;
+        }
+    }
+    
     /**
      *
      * Validates a username and password, returns based on success or failure
@@ -109,19 +125,15 @@ class Session extends Util {
      * @param string|int $pass
      * @return boolean
      */
-    function checkLogin($user, $pass, $echo = false) {
-        $user = strtolower($user);
-        $pass = Util::secureHash($pass);
-
+    function attemptLogin($user, $pass) {
         $stmt = $this->db->prepare("SELECT * FROM `customers` WHERE `EmailAddress` = ? AND `Password` = ?");
         $stmt->bind_param("ss", $user, $pass);
         $stmt->execute();
         $stmt->store_result();
-        echo $stmt->num_rows;
         if ($stmt->num_rows > 0) {
-            return 0;
+            return true;
         } else {
-            return 1;
+            return false;
         }
     }
 
@@ -131,29 +143,22 @@ class Session extends Util {
      * @param string|int $user
      * @param string|int $pass
      */
-    function setSession($user, $pass) {
-        $loginCode = $this->checkLogin($user, $pass);
-        if ($loginCode == 0) {
-            $username = htmlspecialchars(mysqli_real_escape_string($this->db, $user));
-            $password = Util::secureHash($pass);
-            $stmt = $this->db->query("SELECT CustomerID FROM `Customers` WHERE EmailAddress ='{$username}'");
-            $data = $stmt->fetch_array(MYSQLI_ASSOC);
-            $stmt->close();
+    function setSession($user) {
+        $stmt = $this->db->query("SELECT CustomerID FROM `Customers` WHERE EmailAddress ='{$user}'");
+        $data = $stmt->fetch_array(MYSQLI_ASSOC);
+        $stmt->close();
 
-            $stmt = $this->db->query("SELECT * FROM sessions WHERE uid = '{$data['CustomerID']}'");
-            if ($stmt->num_rows >= 1) {
-                $delete = $this->db->query("DELETE FROM sessions WHERE uid='{$data['CustomerID']}'");
-            }
-            $sid = Util::generateRandID(16);
-            $timestamp = time() + 60 * SESSION_LENGTH;
-            $insertQuery = $this->db->query("INSERT INTO `sessions` (`uid`,`sid`,`timestamp`) VALUES ('{$data['CustomerID']}', '{$sid}', '{$timestamp}')");
-            $_SESSION['username'] = $username;
-            $_SESSION['sid'] = $sid;
-            return true;
-        } else if ($loginCode == 1)  {
-            echo "Failed to login, please try again.";
-            echo "<br />Return to the login form: <a href=\"./login.php\" class=\"boldAnchor\">here</a>";
+        $stmt = $this->db->query("SELECT * FROM sessions WHERE uid = '{$data['CustomerID']}'");
+        if ($stmt->num_rows >= 1) {
+            $this->db->query("DELETE FROM sessions WHERE uid='{$data['CustomerID']}'");
         }
+        
+        $sid = Util::generateRandID(16);
+        $timestamp = time() + 60 * SESSION_LENGTH;
+        $this->db->query("INSERT INTO `sessions` (`uid`,`sid`,`timestamp`) VALUES ('{$data['CustomerID']}', '{$sid}', '{$timestamp}')");
+        $_SESSION['username'] = $user;
+        $_SESSION['sid'] = $sid;
+        return true;
     }
 
     /**
@@ -162,7 +167,7 @@ class Session extends Util {
      */
     function clearSession($sid) {
         $sid = mysqli_real_escape_string($sid);
-        $query = $this->db->query("DELETE FROM sessions WHERE sid='{$sid}'");
+        $this->db->query("DELETE FROM sessions WHERE sid='{$sid}'");
         Util::redirect('index.php?notice=You have been logged out! Your session may have expired!');
         session_destroy();
     }

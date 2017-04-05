@@ -41,7 +41,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class=" bottom-product">
                         <div class="col-md-6 bottom-cd simpleCart_shelfItem">
                             <div class="product-at ">
-                                <a href="single.php?prodid=<?php echo $productid; ?>"><img class="img-responsive" src="<?php echo $image; ?>" alt="">
+                                <a href="single.php?product=<?php echo $productid; ?>"><img class="img-responsive" src="<?php echo $image; ?>" alt="">
                                     <div class="pro-grid">
                                         <span class="buy-in">Buy Now</span>
                                     </div>
@@ -49,7 +49,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                             <p class="tun"><span><?php echo $productname; ?></span><br><?php echo $desc; ?></p>
                             <div class="ca-rt">                                        
-                                <a href="addcart.php?prodid=<?php echo $productid; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $price; ?> </p></a>						
+                                <a href="addcart.php?product=<?php echo $productid; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $price; ?> </p></a>						
                             </div>
                             <div class="clearfix"></div>
                         </div>
@@ -75,7 +75,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             </div>
                             <p class="tun"><span><?php echo $productname; ?></span><br><?php echo $desc; ?></p>
                             <div class="ca-rt">                                        
-                                <a href="addcart.php?prodid=<?php echo $productid; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $price; ?> </p></a>						
+                                <a href="addcart.php?product=<?php echo $productid; ?>" class="item_add"><p class="number item_price"><i> </i>$<?php echo $price; ?> </p></a>						
                             </div>
                             <div class="clearfix"></div>
                         </div>

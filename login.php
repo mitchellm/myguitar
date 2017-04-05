@@ -40,8 +40,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </form>
                         <?php
                         } else {
-                            if($session->setSession($_POST['email'], $_POST['password']))
+                            if($session->login($_POST['email'], $_POST['password'])) {
                                 $session->redirect('./index.php');
+                            }
                         }
                         ?>
                     </div>
