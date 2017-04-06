@@ -44,7 +44,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                     <h3><a href="#"><?php echo $item[1]; ?></a><span><?php echo $item[2]; ?></span></h3>
                                     <ul class="qty">
                                         <li><p>Qty : <?php echo $item[3]; ?></p></li>
-                                        <li><p><a href="removecart.php?all=true&prodid=<?php echo $pID ?>">Remove all</a></p></li>
+                                        <li><p><a href="removecart.php?all=true&product=<?php echo $pID ?>">Remove all</a></p></li>
                                         <li><p>Remove x <form action="removecart.php" method="post"><input type="number" min="1" max="<?php echo $item[3]; ?>" name="amount" /><input type="hidden" name="product" value="<?php echo $pID ?>" /><input type="submit" name="removex" /></form></p></li>
                                     </ul>
                                     <div class="delivery">
@@ -63,9 +63,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <div class="price-details">
                         <h3>Price Details</h3>
                         <span>Total</span>
-                        <span class="total1"><?php echo number_format($store->getCartTotal(), 2); ?></span>
+                            <?php 
+                                $cartTotal = $store->getCartTotal();
+                                $tax = $cartTotal * .07; 
+                            ?>
+                        <span class="total1">
+                            <?php echo number_format($cartTotal, 2); ?>
+                        </span>
                         <span>Taxes (7% sales tax)</span>
-                        <span class="total1"><?php echo $store->getCartTotal() * .07; ?> </span>
+                        <span class="total1">
+                            <?php echo $tax; ?>
+                        </span>
                         <span>Discount</span>
                         <span class="total1">---</span>
                         <span>Delivery Charges</span>
@@ -73,8 +81,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div class="clearfix"></div>				 
                     </div>	
                     <ul class="total_price">
-                        <li class="last_price"> <h4>TOTAL</h4></li>	
-                        <li class="last_price"><span><?php echo number_format($store->getCartTotal() + $store->getCartTotal() * .07, 2); ?></span></li>
+                        <li class="last_price"> 
+                            <h4>
+                                TOTAL
+                            </h4>
+                        </li>	
+                        <li class="last_price">
+                            <span>
+                                <?php echo number_format($cartTotal + $tax, 2); ?>
+                            </span>
+                        </li>
                     </ul>
                     <div class="clearfix"></div>
                     <a class="order" href="#">Place Order</a>
@@ -82,6 +98,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
         </div>
         <!--//content-->
-        <?php require_once('includes/footer.php'); ?>
+<?php require_once('includes/footer.php'); ?>
     </body>
 </html>

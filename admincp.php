@@ -99,7 +99,7 @@
     <div class="navbar">
         <ul>
             <li> 
-                <a href="#">
+                <a href="?request=searchCustomers">
                     Search Customers
                 </a>
             </li>

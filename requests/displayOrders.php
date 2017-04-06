@@ -1,8 +1,5 @@
 <style type="text/css">
-    tr td, tr th {
-        padding: 15px;
-    }
-
+    tr td, tr th { padding: 15px; }
     table { border-collapse: collapse; }
     tr { border: solid thin; }
     #search {
@@ -73,7 +70,7 @@ if ($allowAccess) {
                         <?php echo $orders[$i]['TaxAmount']; ?>
                     </td>
                     <td>
-                        <?php echo $orders[$i]['TaxAmount']; ?>
+                        <?php echo $orders[$i]['CardNumber']; ?>
                     </td>
                     <td>
                         <a href="#">
@@ -107,7 +104,7 @@ if ($allowAccess) {
                         <?php echo $orders[$i]['TaxAmount']; ?>
                     </td>
                     <td>
-                        <?php echo $orders[$i]['TaxAmount']; ?>
+                        <?php echo $orders[$i]['CardNumber']; ?>
                     </td>
                     <td>
                         <a href="#">
