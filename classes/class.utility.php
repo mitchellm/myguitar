@@ -87,6 +87,75 @@ class Utility {
         }
     }
 
+    static function buildAddressSearch($AddressID, $Line1, $Line2, $City, $State, $ZipCode, $Phone) {
+        $query = "SELECT `AddressID`, `Line1`, `Line2`, `City`, `State`, `ZipCode`, `Phone` FROM `Addresses`";
+        $init = 0;
+        if ($AddressID != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "AddressID LIKE '%{$AddressID}%' ";
+            $init++;
+        }
+        if ($Line1 != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "Line1 LIKE '%{$Line1}%' ";
+            $init++;
+        }
+        if ($Line2 != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "Line2 LIKE '%{$Line2}%' ";
+            $init++;
+        }
+        if ($City != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "City LIKE '%{$City}%' ";
+            $init++;
+        }
+        if ($State != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "State LIKE '%{$State}%' ";
+            $init++;
+        }
+        if ($ZipCode != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "ZipCode LIKE '%{$ZipCode}%' ";
+            $init++;
+        }
+        if ($Phone != "") {
+            if ($init > 0) {
+                $query = $query . "AND ";
+            } else {
+                $query = $query . "WHERE ";
+            }
+            $query = $query . "Phone LIKE '%{$Phone}%' ";
+            $init++;
+        }
+        return $query;
+    }
+
     /**
      * Grabs info based on the parameter
      * @param string $arg to use

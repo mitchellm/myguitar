@@ -1,9 +1,14 @@
 <?php
 require_once('classes/class.querybuilder.php');
 
-$QB = new QueryBuilder();
+$qry = new QueryBuilder();
 
-$from = "Customers";
-$QB->SELECT(array('EmailAddress','CustomerID','Phone'), $from);
-echo $QB->WHERE('AddressID', 'LIKE', 'M');
-
+$qry->select(array('ItemPrice'))->
+        from('orderitems')->
+        where('ItemPrice', '=', '1199');
+?>
+<pre>
+<?php
+var_dump($qry->retrieve());
+?>
+</pre>
