@@ -75,23 +75,8 @@
     <div class="navbar">
         <ul>
             <li> 
-                <a href="?request=displayCustomers">
-                    Display Customers
-                </a>
-            </li>
-            <li> 
-                <a href="?request=displayOrders">
-                    Display Orders
-                </a>
-            </li>
-            <li> 
                 <a href="?request=displayBanners">
                     Display Banners
-                </a>
-            </li>
-            <li> 
-                <a href="?request=displayProducts">
-                    Display Products
                 </a>
             </li>
         </ul>
@@ -109,7 +94,7 @@
                 </a>
             </li>
             <li> 
-                <a href="#">
+                <a href="?request=searchProducts">
                     Search Products
                 </a>
             </li>

@@ -7,30 +7,52 @@
         margin-top: 45px;
     }
 </style>
-<form id="search" action="?request=searchCustomers" method="post">
+<form id="search" action="?request=searchProducts" method="post">
     <table>
         <tr>
             <td>
-                CardNumber LIKE:
+                ProductID LIKE:
             </td>
             <td>
-                <input type="text" name="EmailAddress" />
+                <input type="text" name="ProductID" />
             </td>
             <td>
-                FirstName LIKE:
+                CategoryID LIKE:
             </td>
             <td>
-                <input type="text" name="FirstName" />
+                <input type="text" name="CategoryID" />
             </td>
         </tr>
         <tr>
             <td>
-                LastName LIKE:
+                ProductCode LIKE:
             </td>
             <td>
-                <input type="text" name="LastName" />
+                <input type="text" name="ProductCode" />
             </td>
-            <td colspan="2">
+            <td>
+                ProductName LIKE:
+            </td>
+            <td>
+                <input type="text" name="ProductName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Description LIKE:
+            </td>
+            <td>
+                <input type="text" name="Description" />
+            </td>
+            <td>
+                ListPrice LIKE:
+            </td>
+            <td>
+                <input type="text" name="ListPrice" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
                 <input type="submit" name="Search" value="Search" style="width:100%;" />
             </td>    
         </tr>
@@ -41,49 +63,76 @@ foreach ($_POST as $$key => $val) {
     $$key = htmlspecialchars(mysqli_real_escape_string($session->getDBC(), $val));
 }
 if (isset($_POST['Search'])) {
-    $query = "SELECT `FirstName`, `LastName`, `EmailAddress`, `CustomerID` FROM `Customers`";
+    $query = "SELECT `ProductID`, `CategoryID`, `ProductCode`, `ProductName`, `Description`, `ListPrice`, `DiscountPercent`, `DateAdded`, `image` FROM `Products`";
     $init = 0;
-    if ($FirstName != "") {
+    if ($ProductID != "") {
         if ($init > 0) {
             $query = $query . "AND ";
         } else {
             $query = $query . "WHERE ";
         }
-        $query = $query . "FirstName LIKE '%{$FirstName}%' ";
+        $query = $query . "ProductID LIKE '%{$ProductID}%' ";
         $init++;
     }
-    if ($LastName != "") {
+    if ($CategoryID != "") {
         if ($init > 0) {
             $query = $query . "AND ";
         } else {
             $query = $query . "WHERE ";
         }
-        $query = $query . "LastName LIKE '%{$LastName}%' ";
+        $query = $query . "CategoryID LIKE '%{$CategoryID}%' ";
         $init++;
-    }if ($EmailAddress != "") {
+    }if ($ProductCode != "") {
         if ($init > 0) {
             $query = $query . "AND ";
         } else {
             $query = $query . "WHERE ";
         }
-        $query = $query . "EmailAddress LIKE '%{$EmailAddress}%' ";
+        $query = $query . "ProductCode LIKE '%{$ProductCode}%' ";
+        $init++;
+    }if ($ProductName != "") {
+        if ($init > 0) {
+            $query = $query . "AND ";
+        } else {
+            $query = $query . "WHERE ";
+        }
+        $query = $query . "ProductName LIKE '%{$ProductName}%' ";
+        $init++;
+    }
+    if ($ListPrice != "") {
+        if ($init > 0) {
+            $query = $query . "AND ";
+        } else {
+            $query = $query . "WHERE ";
+        }
+        $query = $query . "ListPrice LIKE '%{$ListPrice}%' ";
+        $init++;
+    }
+    if ($Description != "") {
+        if ($init > 0) {
+            $query = $query . "AND ";
+        } else {
+            $query = $query . "WHERE ";
+        }
+        $query = $query . "Description LIKE '%{$Description}%' ";
         $init++;
     }
     $stmt = $session->getDBC()->prepare($query);
-    $stmt->bind_result($firstname, $lastname, $emailaddress, $customerid);
+    $stmt->bind_result($productid,$categoryid,$productcode,$productname,$description,$listprice,$discountpercent,$dateadded,$image);
     $stmt->execute();
     $stmt->store_result();
-    $users = array();
+    $products = array();
     while ($stmt->fetch()) {
-        $users[] = array('FirstName' => $firstname, 'LastName' => $lastname, 'EmailAddress' => $emailaddress, 'CustomerID' => $customerid);
+        $products[] = array('ProductID' => $productid, 'CategoryID' => $categoryid, 'ProductCode' => $productcode, 'ProductName' => $productname,
+                'Description' => $description, 'ListPrice' => $listprice, 'DiscountPercent' => $discountpercent, 'DateAdded' => $dateadded, 'image' => $image);
     }
-    $numUsers = count($users);
+    $numProducts = count($products);
     echo "<center>" . $query . "</center>";
 ?>
 <table style="margin:auto; margin-top:50px;">
     <tr>
         <?php
-        foreach ($users[0] as $key => $val) {
+        foreach ($products[0] as $key => $val) {
             ?>  
             <th>
                 <?php
@@ -99,26 +148,38 @@ if (isset($_POST['Search'])) {
         <th>
             DELETE
         </th>
-        <th>
-            MAKE/REMOVE ADMIN
-        </th>
     </tr>
     <?php
-    for ($i = 0; $i < $numUsers; $i++) {
+    for ($i = 0; $i < $numProducts; $i++) {
         if (!isset($_POST['submit'])) {
             ?>
             <tr>
                 <td>
-                    <?php echo $users[$i]['FirstName']; ?>
+                    <?php echo $products[$i]['ProductID']; ?>
                 </td>
                 <td>
-                    <?php echo $users[$i]['LastName']; ?>
+                    <?php echo $products[$i]['CategoryID']; ?>
                 </td>
                 <td>
-                    <?php echo $users[$i]['EmailAddress']; ?>
+                    <?php echo $products[$i]['ProductCode']; ?>
                 </td>
                 <td>
-                    <?php echo $users[$i]['CustomerID']; ?>
+                    <?php echo $products[$i]['ProductName']; ?>
+                </td>
+                <td>
+                    <?php echo $products[$i]['Description']; ?>
+                </td>
+                <td>
+                    <?php echo $products[$i]['ListPrice']; ?>
+                </td>
+                <td>
+                    <?php echo $products[$i]['DiscountPercent']; ?>
+                </td>
+                <td>
+                    <?php echo $products[$i]['DateAdded']; ?>
+                </td>
+                <td>
+                    <?php echo $products[$i]['image']; ?>
                 </td>
                 <td>
                     <a href="#">
@@ -128,21 +189,6 @@ if (isset($_POST['Search'])) {
                 <td>
                     <a href="#">
                         Click to delete
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        <?php
-                        if ($session->isAdmin($users[$i]['EmailAddress'])) {
-                            ?>
-                            <a href="?request=manageAdmin&delete&email=<?php echo $users[$i]['EmailAddress']; ?>">REMOVE ADMIN</a>
-                            <?php
-                        } else {
-                            ?>
-                            <a href="?request=manageAdmin&add&email=<?php echo $users[$i]['EmailAddress']; ?>">MAKE ADMIN</a>
-                            <?php
-                        }
-                                ?>
                     </a>
                 </td>
             </tr>
