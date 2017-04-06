@@ -371,6 +371,9 @@ class Session extends Utility {
         return false;
     }
 
+    function getDBC() {
+        return $this->db;
+    }
 }
 
 ?>
