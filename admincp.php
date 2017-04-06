@@ -4,6 +4,7 @@
         require_once 'classes/class.session.php';
         require_once 'classes/class.store.php';
         require_once 'includes/global.php';
+        require_once 'classes/class.querybuilder.php';
 
         $session = new Session();
         $store = new Store();

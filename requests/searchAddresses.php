@@ -65,21 +65,30 @@
     </table>
 </form>
 <?php
-foreach ($_POST as $$key => $val) {
-    $$key = htmlspecialchars(mysqli_real_escape_string($session->getDBC(), $val));
+$search_options = array();
+$fields = array();
+foreach ($_POST as $key => $val) {
+    if($key == "Search")
+        continue;
+    $fields[] = $key;
+    if($val != "")
+        $search_options[$key] = $val;
+    
 }
 if (isset($_POST['Search'])) {
-    $stmt = $session->getDBC()->prepare($query);
-    $stmt->bind_result($addressid, $line1, $line2, $city, $state, $zipcode, $phone);
-    $stmt->execute();
-    $stmt->store_result();
-    $addresses = array();
-    while ($stmt->fetch()) {
-        $addresses[] = array('AddressID' => $addressid, 'Line1' => $line1, 'Line2' => $line2, 'City' => $city,
-            'State' => $state, 'ZipCode' => $zipcode, 'Phone' => $phone);
+    $qry = new QueryBuilder();
+    /**
+     * This bit of code removes the last element of the array (the search submit)
+     * then moves to 
+     */
+    
+    $qry->select($fields)->from('Addresses');
+    foreach($search_options as $key => $val) {
+        $qry->where($key, "LIKE", $val);
     }
+    $addresses = $qry->get();
     $numAddresses = count($addresses);
-    echo "<center>" . $query . "</center>";
+    echo "<center>" . $qry->retrieve() . "</center>";
     ?>
     <table style="margin:auto; margin-top:50px;">
         <tr>
