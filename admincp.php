@@ -104,7 +104,7 @@
                 </a>
             </li>
             <li> 
-                <a href="#">
+                <a href="?request=searchOrders">
                     Search Orders
                 </a>
             </li>

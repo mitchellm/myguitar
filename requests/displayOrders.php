@@ -43,7 +43,7 @@ if ($allowAccess) {
             }
             ?>
             <th>
-                Update
+                VIEW CONTENTS
             </th>
             <th>
                 DELETE
@@ -73,8 +73,8 @@ if ($allowAccess) {
                         <?php echo $orders[$i]['CardNumber']; ?>
                     </td>
                     <td>
-                        <a href="#">
-                            Click to update
+                        <a href="?request=viewOrder&order=<?php echo $orders[$i]['OrderID'] ?>">
+                            View contents
                         </a>
                     </td>
                     <td>
@@ -85,39 +85,39 @@ if ($allowAccess) {
                 </tr>
                 <?php
             } else {
-                if($orders[$i]['CustomerID'] == $_POST['customerid']) {
-                ?>
-                <tr>
-                    <td>
-                        <?php echo $orders[$i]['OrderID']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['CustomerID']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['OrderDate']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['ShipAmount']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['TaxAmount']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['CardNumber']; ?>
-                    </td>
-                    <td>
-                        <a href="#">
-                            Click to update
-                        </a>
-                    </td>
-                    <td>
-                        <a href="#">
-                            Click to delete
-                        </a>
-                    </td>
-                </tr>
-                <?php
+                if ($orders[$i]['CustomerID'] == $_POST['customerid']) {
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $orders[$i]['OrderID']; ?>
+                        </td>
+                        <td>
+                            <?php echo $orders[$i]['CustomerID']; ?>
+                        </td>
+                        <td>
+                            <?php echo $orders[$i]['OrderDate']; ?>
+                        </td>
+                        <td>
+                            <?php echo $orders[$i]['ShipAmount']; ?>
+                        </td>
+                        <td>
+                            <?php echo $orders[$i]['TaxAmount']; ?>
+                        </td>
+                        <td>
+                            <?php echo $orders[$i]['CardNumber']; ?>
+                        </td>
+                        <td>
+                            <a href="#">
+                                Click to update
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#">
+                                Click to delete
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
                 }
             }
         }
