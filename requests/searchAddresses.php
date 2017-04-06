@@ -145,59 +145,61 @@ if (isset($_POST['Search'])) {
     }
     $numAddresses = count($addresses);
     echo "<center>" . $query . "</center>";
-?>
-<table style="margin:auto; margin-top:50px;">
-    <tr>
-        <?php
-        foreach ($addresses[0] as $key => $val) {
-            ?>  
-            <th>
-                <?php
-                echo $key;
-                ?>
-            </th>
+    ?>
+    <table style="margin:auto; margin-top:50px;">
+        <tr>
             <?php
-        }
-        ?>
-        <th>
-            DELETE
-        </th>
-    </tr>
-    <?php
-    for ($i = 0; $i < $numAddresses; $i++) {
-        if (!isset($_POST['submit'])) {
-            ?>
-            <tr>
-                <td>
-                    <?php echo $addresses[$i]['AddressID']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['Line1']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['Line2']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['City']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['State']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['ZipCode']; ?>
-                </td>
-                <td>
-                    <?php echo $addresses[$i]['Phone']; ?>
-                </td>
-                <td>
-                    <a href="#">
-                        Click to delete
-                    </a>
-                </td>
+            if (count($addresses) > 0) {
+                foreach ($addresses[0] as $key => $val) {
+                    ?>  
+                    <th>
+                        <?php
+                        echo $key;
+                        ?>
+                    </th>
+                    <?php
+                }
+                ?>
+                <th>
+                    DELETE
+                </th>
             </tr>
             <?php
+            for ($i = 0; $i < $numAddresses; $i++) {
+                if (!isset($_POST['submit'])) {
+                    ?>
+                    <tr>
+                        <td>
+                            <?php echo $addresses[$i]['AddressID']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['Line1']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['Line2']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['City']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['State']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['ZipCode']; ?>
+                        </td>
+                        <td>
+                            <?php echo $addresses[$i]['Phone']; ?>
+                        </td>
+                        <td>
+                            <a href="#">
+                                Click to delete
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
+                }
+            }
         }
     }
-}
     ?>
 </table>
