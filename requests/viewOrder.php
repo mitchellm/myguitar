@@ -10,7 +10,7 @@ if(isset($_GET['order'])) {
      $items[] = array($lineid,$orderid,$productid,$itemprice,$discountamount,$quantity);
  }
 } else {
-    Utility::redirect("?request=displayOrders");
+    Utility::redirect("?request=searchOrders");
 }
 ?>
 <style type="text/css">

@@ -98,6 +98,11 @@
                     Search Products
                 </a>
             </li>
+            <li> 
+                <a href="?request=searchAddresses">
+                    Search Addresses
+                </a>
+            </li>
         </ul>
     </div>
 

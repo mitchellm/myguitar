@@ -94,6 +94,9 @@ if (isset($_POST['Search'])) {
         }
         ?>
         <th>
+            VIEW ADDRESSES
+        </th>
+        <th>
             Update
         </th>
         <th>
@@ -119,6 +122,11 @@ if (isset($_POST['Search'])) {
                 </td>
                 <td>
                     <?php echo $users[$i]['CustomerID']; ?>
+                </td>
+                <td>
+                    <a href="?request=viewAddresses&customer=<?php echo $users[$i]['CustomerID']; ?>">
+                        VIEW ADDRESSES
+                    </a>
                 </td>
                 <td>
                     <a href="#">

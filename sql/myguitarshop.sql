@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2017 at 12:26 AM
+-- Generation Time: Apr 06, 2017 at 10:16 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -28,7 +28,6 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `addresses` (
   `AddressID` int(11) NOT NULL,
-  `CustomerID` int(11) DEFAULT NULL,
   `Line1` varchar(60) NOT NULL,
   `Line2` varchar(60) DEFAULT NULL,
   `City` varchar(40) NOT NULL,
@@ -37,6 +36,15 @@ CREATE TABLE `addresses` (
   `Phone` varchar(12) NOT NULL,
   `Disabled` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`AddressID`, `Line1`, `Line2`, `City`, `State`, `ZipCode`, `Phone`, `Disabled`) VALUES
+(1, '231 Lamar Lane', NULL, 'Jamestown', 'JA', '4342', '4785508357', 0),
+(2, '231 Lamar Lane', NULL, 'Jamestown', 'JA', '4342', '4785508357', 0),
+(3, '85 Zame Street', NULL, 'Oreant', 'LA', '777', '888888888', 0);
 
 -- --------------------------------------------------------
 
@@ -99,6 +107,19 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `contact`
+--
+
+CREATE TABLE `contact` (
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customers`
 --
 
@@ -123,11 +144,31 @@ INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `customers_addresses`
+--
+
+CREATE TABLE `customers_addresses` (
+  `CustomerID` int(11) NOT NULL,
+  `AddressID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customers_addresses`
+--
+
+INSERT INTO `customers_addresses` (`CustomerID`, `AddressID`) VALUES
+(1, 1),
+(2, 3),
+(2, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `orderitems`
 --
 
 CREATE TABLE `orderitems` (
-  `ItemID` int(11) NOT NULL,
+  `LineID` int(11) NOT NULL,
   `OrderID` int(11) DEFAULT NULL,
   `ProductID` int(11) DEFAULT NULL,
   `ItemPrice` decimal(10,0) NOT NULL,
@@ -139,7 +180,7 @@ CREATE TABLE `orderitems` (
 -- Dumping data for table `orderitems`
 --
 
-INSERT INTO `orderitems` (`ItemID`, `OrderID`, `ProductID`, `ItemPrice`, `DiscountAmount`, `Quantity`) VALUES
+INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `DiscountAmount`, `Quantity`) VALUES
 (1, 1, 2, '1199', '360', 1),
 (2, 2, 4, '490', '186', 1),
 (3, 3, 3, '2517', '1309', 1),
@@ -251,8 +292,8 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
+('2cb96f97adf868051f0387961f7fcbad', '1491467306', 1491467306, 1),
 ('3caf776b5b55016e7af2db2804ffd282', '1488307047', 1488307047, 8),
-('52ad50391f302e99c32016ee0a211d84', '1491432916', 1491432916, 1),
 ('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
 ('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
 ('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
@@ -268,8 +309,7 @@ INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
 -- Indexes for table `addresses`
 --
 ALTER TABLE `addresses`
-  ADD PRIMARY KEY (`AddressID`),
-  ADD KEY `CustomerID` (`CustomerID`);
+  ADD PRIMARY KEY (`AddressID`);
 
 --
 -- Indexes for table `administrators`
@@ -296,7 +336,9 @@ ALTER TABLE `customers`
 -- Indexes for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  ADD PRIMARY KEY (`ItemID`);
+  ADD PRIMARY KEY (`LineID`),
+  ADD KEY `OrderID` (`OrderID`),
+  ADD KEY `ProductID` (`ProductID`);
 
 --
 -- Indexes for table `orders`
@@ -326,6 +368,11 @@ ALTER TABLE `sessions`
 --
 
 --
+-- AUTO_INCREMENT for table `addresses`
+--
+ALTER TABLE `addresses`
+  MODIFY `AddressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
@@ -335,16 +382,17 @@ ALTER TABLE `customers`
 --
 
 --
--- Constraints for table `addresses`
---
-ALTER TABLE `addresses`
-  ADD CONSTRAINT `addrCust` FOREIGN KEY (`CustomerID`) REFERENCES `customers` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Constraints for table `administrators`
 --
 ALTER TABLE `administrators`
   ADD CONSTRAINT `CA1` FOREIGN KEY (`EmailAddress`) REFERENCES `customers` (`EmailAddress`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `orderitems`
+--
+ALTER TABLE `orderitems`
+  ADD CONSTRAINT `itemsToProduct` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
+  ADD CONSTRAINT `itemstoOrder` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`);
 
 --
 -- Constraints for table `products`
