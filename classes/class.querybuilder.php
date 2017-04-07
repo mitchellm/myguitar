@@ -82,23 +82,23 @@ class QueryBuilder {
      * @param String $where tablename
      * @return String $this->query 
      */
-    function select($what) {
-        $what = $this->clean($what);
-        if ($this->state == 0 && $what != "*") {
-            if (!is_array($what))
-                $this->query .= "SELECT `" . $what . "` ";
+    function select($column) {
+        $column = $this->clean($column);
+        if ($this->state == 0 && $column != "*") {
+            if (!is_array($column))
+                $this->query .= "SELECT `" . $column . "` ";
             else {
                 $this->query .= "SELECT ";
-                $numtargets = count($what);
+                $numtargets = count($column);
                 for ($i = 0; $i < $numtargets; $i++) {
                     if ($i < ($numtargets - 1))
-                        $this->query .= "`" . $what[$i] . "`, ";
+                        $this->query .= "`" . $column[$i] . "`, ";
                     else
-                        $this->query .= "`" . $what[$i] . "` ";
+                        $this->query .= "`" . $column[$i] . "` ";
                 }
             }
         } else {
-            $this->query .= "SELECT " . $what . " ";
+            $this->query .= "SELECT " . $column . " ";
         }
         $this->transition();
         return $this;
@@ -107,10 +107,10 @@ class QueryBuilder {
     /**
      * FROM
      */
-    function from($where) {
-        $where = $this->clean($where);
+    function from($table) {
+        $table = $this->clean($table);
         if ($this->state == 1) {
-            $this->query .= "FROM `" . $where . "` ";
+            $this->query .= "FROM `" . $table . "` ";
         }
         $this->transition();
         return $this;
