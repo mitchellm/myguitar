@@ -107,7 +107,7 @@ if (isset($_POST['Search'])) {
                     </a>
                 </td>
                 <td>
-                    <a href="#">
+                    <a href="?request=updateCustomers&customerid=<?php echo $users[$i]['CustomerID']; ?>">
                         Click to update
                     </a>
                 </td>

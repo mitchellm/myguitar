@@ -18,12 +18,6 @@ class QueryBuilder {
     private $state;
     private $db;
 
-    /**
-     * STATES: 0 = INITIAL
-     * 1 - SELECT DEFINED
-     * 2 - FROM DEFINED
-     * 3 - WHERE DEFINED (CONDITIONAL
-     */
     function __construct() {
         $this->db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         $this->state = 0;
