@@ -5,6 +5,7 @@
         require_once 'classes/class.store.php';
         require_once 'includes/global.php';
         require_once 'classes/class.querybuilder.php';
+        require_once('includes/catch_post.php');
 
         $session = new Session();
         $store = new Store();
@@ -15,9 +16,9 @@
                 Utility::redirect("login.php");
             else
                 die("No permissions to access | Account logged into is NOT listed as administrator in database."
-                    . "<br /><a href=\"index.php\">Return home</a>");
+                        . "<br /><a href=\"index.php\">Return home</a>");
         ?>
-        
+
         <style type="text/css">
             h1 {
                 text-align: center;

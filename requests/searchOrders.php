@@ -31,40 +31,15 @@
     </table>
 </form>
 <?php
-foreach ($_POST as $$key => $val) {
-    $$key = htmlspecialchars(mysqli_real_escape_string($session->getDBC(), $val));
-}
 if (isset($_POST['Search'])) {
-    $query = "SELECT `OrderID`, `CustomerID`, `ShipAmount`, `TaxAmount`, `CardNumber` FROM `Orders`";
-    $init = 0;
-    if ($CardNumber != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "CardNumber LIKE '%{$CardNumber}%' ";
-        $init++;
+    $qry = new QueryBuilder();
+    $qry->select("*")->from('Orders');
+    foreach($search_options as $key => $val) {
+        $qry->where($key, "LIKE", $val);
     }
-    if ($CustomerID != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "CustomerID LIKE '%{$CustomerID}%' ";
-        $init++;
-    }
-    $stmt = $session->getDBC()->prepare($query);
-    $stmt->bind_result($OrderID, $CustomerID, $ShipAmount, $TaxAmount, $CardNumber);
-    $stmt->execute();
-    $stmt->store_result();
-    $orders = array();
-    while ($stmt->fetch()) {
-        $orders[] = array('OrderID' => $OrderID, 'CustomerID' => $CustomerID, 'ShipAmount' => $ShipAmount, 'TaxAmount' => $TaxAmount, 'CardNumber' => $CardNumber);
-    }
+    $orders = $qry->get();
     $numOrders = count($orders);
-    echo "<center>" . $query . "</center>";
+    echo "<center>" . $qry->retrieve() . "</center>";
 ?>
 <table style="margin:auto; margin-top:50px;">
     <tr>
@@ -98,13 +73,31 @@ if (isset($_POST['Search'])) {
                     <?php echo $orders[$i]['CustomerID']; ?>
                 </td>
                 <td>
+                    <?php echo $orders[$i]['OrderDate']; ?>
+                </td>
+                <td>
                     <?php echo $orders[$i]['ShipAmount']; ?>
                 </td>
                 <td>
                     <?php echo $orders[$i]['TaxAmount']; ?>
                 </td>
                 <td>
+                    <?php echo $orders[$i]['ShipDate']; ?>
+                </td>
+                <td>
+                    <?php echo $orders[$i]['ShipAddressID']; ?>
+                </td>
+                <td>
+                    <?php echo $orders[$i]['CardType']; ?>
+                </td>
+                <td>
                     <?php echo $orders[$i]['CardNumber']; ?>
+                </td>
+                <td>
+                    <?php echo $orders[$i]['CardExpires']; ?>
+                </td>
+                <td>
+                    <?php echo $orders[$i]['BillingAddressID']; ?>
                 </td>
                 <td>
                     <a href="?request=viewOrder&order=<?php echo $orders[$i]['OrderID']?>">

@@ -30,55 +30,30 @@
             <td>
                 <input type="text" name="LastName" />
             </td>
-            <td colspan="2">
+            <td>
+                EmailAddress LIKE:
+            </td>
+            <td>
+                <input type="text" name="EmailAddress" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
                 <input type="submit" name="Search" value="Search" style="width:100%;" />
-            </td>    
+            </td>  
         </tr>
     </table>
 </form>
 <?php
-foreach ($_POST as $$key => $val) {
-    $$key = htmlspecialchars(mysqli_real_escape_string($session->getDBC(), $val));
-}
 if (isset($_POST['Search'])) {
-    $query = "SELECT `FirstName`, `LastName`, `EmailAddress`, `CustomerID` FROM `Customers`";
-    $init = 0;
-    if ($FirstName != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "FirstName LIKE '%{$FirstName}%' ";
-        $init++;
+    $qry = new QueryBuilder();
+    $qry->select("*")->from('Customers');
+    foreach($search_options as $key => $val) {
+        $qry->where($key, "LIKE", $val);
     }
-    if ($LastName != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "LastName LIKE '%{$LastName}%' ";
-        $init++;
-    }if ($EmailAddress != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "EmailAddress LIKE '%{$EmailAddress}%' ";
-        $init++;
-    }
-    $stmt = $session->getDBC()->prepare($query);
-    $stmt->bind_result($firstname, $lastname, $emailaddress, $customerid);
-    $stmt->execute();
-    $stmt->store_result();
-    $users = array();
-    while ($stmt->fetch()) {
-        $users[] = array('FirstName' => $firstname, 'LastName' => $lastname, 'EmailAddress' => $emailaddress, 'CustomerID' => $customerid);
-    }
+    $users = $qry->get();
     $numUsers = count($users);
-    echo "<center>" . $query . "</center>";
+    echo "<center>" . $qry->retrieve() . "</center>";
 ?>
 <table style="margin:auto; margin-top:50px;">
     <tr>
@@ -112,16 +87,19 @@ if (isset($_POST['Search'])) {
             ?>
             <tr>
                 <td>
-                    <?php echo $users[$i]['FirstName']; ?>
-                </td>
-                <td>
-                    <?php echo $users[$i]['LastName']; ?>
+                    <?php echo $users[$i]['CustomerID']; ?>
                 </td>
                 <td>
                     <?php echo $users[$i]['EmailAddress']; ?>
                 </td>
                 <td>
-                    <?php echo $users[$i]['CustomerID']; ?>
+                    <?php echo $users[$i]['Password']; ?>
+                </td>
+                <td>
+                    <?php echo $users[$i]['FirstName']; ?>
+                </td>
+                <td>
+                    <?php echo $users[$i]['LastName']; ?>
                 </td>
                 <td>
                     <a href="?request=viewAddresses&customer=<?php echo $users[$i]['CustomerID']; ?>">

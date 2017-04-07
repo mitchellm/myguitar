@@ -59,75 +59,15 @@
     </table>
 </form>
 <?php
-foreach ($_POST as $$key => $val) {
-    $$key = htmlspecialchars(mysqli_real_escape_string($session->getDBC(), $val));
-}
 if (isset($_POST['Search'])) {
-    $query = "SELECT `ProductID`, `CategoryID`, `ProductCode`, `ProductName`, `Description`, `ListPrice`, `DiscountPercent`, `DateAdded`, `image` FROM `Products`";
-    $init = 0;
-    if ($ProductID != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "ProductID LIKE '%{$ProductID}%' ";
-        $init++;
+    $qry = new QueryBuilder();
+    $qry->select("*")->from('Products');
+    foreach($search_options as $key => $val) {
+        $qry->where($key, "LIKE", $val);
     }
-    if ($CategoryID != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "CategoryID LIKE '%{$CategoryID}%' ";
-        $init++;
-    }if ($ProductCode != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "ProductCode LIKE '%{$ProductCode}%' ";
-        $init++;
-    }if ($ProductName != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "ProductName LIKE '%{$ProductName}%' ";
-        $init++;
-    }
-    if ($ListPrice != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "ListPrice LIKE '%{$ListPrice}%' ";
-        $init++;
-    }
-    if ($Description != "") {
-        if ($init > 0) {
-            $query = $query . "AND ";
-        } else {
-            $query = $query . "WHERE ";
-        }
-        $query = $query . "Description LIKE '%{$Description}%' ";
-        $init++;
-    }
-    $stmt = $session->getDBC()->prepare($query);
-    $stmt->bind_result($productid,$categoryid,$productcode,$productname,$description,$listprice,$discountpercent,$dateadded,$image);
-    $stmt->execute();
-    $stmt->store_result();
-    $products = array();
-    while ($stmt->fetch()) {
-        $products[] = array('ProductID' => $productid, 'CategoryID' => $categoryid, 'ProductCode' => $productcode, 'ProductName' => $productname,
-                'Description' => $description, 'ListPrice' => $listprice, 'DiscountPercent' => $discountpercent, 'DateAdded' => $dateadded, 'image' => $image);
-    }
+    $products = $qry->get();
     $numProducts = count($products);
-    echo "<center>" . $query . "</center>";
+    echo "<center>" . $qry->retrieve() . "</center>";
 ?>
 <table style="margin:auto; margin-top:50px;">
     <tr>
