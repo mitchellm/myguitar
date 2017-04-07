@@ -45,6 +45,36 @@ class QueryBuilder {
         }
         return $output;
     }
+    
+    function update($table) {
+        $what = $this->clean($table);
+        if($this->state == 0) {
+            $this->query .= "UPDATE `" .$table ."` "; 
+        }
+        $this->transition();
+        return $this;
+    }
+    
+    function set($column, $toVal) {
+        if($this->state > 0) {
+            if(!is_array($column) && !is_array($toVal)) {
+                $this->query .= "SET `" . $column . "` = '" . $toVal . "' ";
+            } else {
+                $columnC = count($column);
+                $varC = count($toVal);
+                if($columnC == $varC) {
+                    $this->query .= "SET ";
+                    for($i = 0; $i < $varC; $i++) {
+                        if($i > 0)
+                            $this->query .= ", ";
+                        $this->query .= "`".$column[$i] . "` = '" . $toVal[$i] . "' ";
+                    }
+                }
+            }
+        }
+        $this->transition();
+        return $this;
+    }
 
     /**
      * Draws out beginning of SELECT statement, depending on WHAT target to select and from WHREE
@@ -120,6 +150,11 @@ class QueryBuilder {
         }
         $query_result->free();
         return $ret;
+    }
+    
+    function exec() {
+        $query = $this->db->query($this->query);
+        return $query;
     }
 
     /**

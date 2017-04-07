@@ -3,12 +3,10 @@ require_once('classes/class.querybuilder.php');
 
 $qry = new QueryBuilder();
 
-$qry->select(array('ItemPrice'))->
-        from('orderitems')->
-        where('ItemPrice', '=', '1199');
+$qry->update('Customers')->set(array('EmailAddress', 'FirstName'), array('bil2l@gmail.com', 'Bill'))->where('CustomerID', '=', '1');
 ?>
 <pre>
 <?php
-var_dump($qry->retrieve());
+var_dump($qry->exec());
 ?>
 </pre>
