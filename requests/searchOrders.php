@@ -85,21 +85,6 @@ if (isset($_POST['Search'])) {
                         <?php echo $orders[$i]['ShipDate']; ?>
                     </td>
                     <td>
-                        <?php echo $orders[$i]['ShipAddressID']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['CardType']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['CardNumber']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['CardExpires']; ?>
-                    </td>
-                    <td>
-                        <?php echo $orders[$i]['BillingAddressID']; ?>
-                    </td>
-                    <td>
                         <a href="?request=viewOrder&order=<?php echo $orders[$i]['OrderID'] ?>">
                             VIEW CONTENTS
                         </a>

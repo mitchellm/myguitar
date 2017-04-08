@@ -1,17 +1,15 @@
 <?php
 
 require_once('includes/head_imports_meta.php');
-if (isset($_SERVER['HTTP_REFERER'])) {
-    $refer = $_SERVER['HTTP_REFERER'];
-    $len = strlen($refer);
-    $start = $len - 12;
-    $important = substr($refer, $start, $len);
-    $orderitems = array();
-    if ($important == "checkout.php") {
-        $cartItems = $store->getCart();
-        foreach ($cartItems as $key => $val) {
-            $orderitems[] = $val;
-        }
+$refer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+$len = strlen($refer);
+$start = $len - 12;
+$important = substr($refer, $start, $len);
+$orderitems = array();
+if ($important == "checkout.php") {
+    $cartItems = $store->getCart();
+    foreach ($cartItems as $key => $val) {
+        $orderitems[] = $val;
     }
     if ($session->isLoggedIn()) {
         $cartTotal = $store->getCartTotal();
@@ -25,6 +23,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
         $result = $qry2->get();
         $orderid = $result[0]['OrderID'];
         foreach ($orderitems as $key => $val) {
+            die(var_dump($val[3]));
             $quantity = $val[3];
             $productid = $val[5];
             $discount = $val[6];
@@ -36,5 +35,13 @@ if (isset($_SERVER['HTTP_REFERER'])) {
         echo "Order successfully placed, cart cleared. You can return to the homepage here: <a href=\"index.php\">Click</a>";
         $store->emptyCart();
     }
+} else {
+    $location ="index.php";
+    echo '<script type="text/javascript">';
+    echo 'window.location.href="' . $location . '";';
+    echo '</script>';
+    echo '<noscript>';
+    echo '<meta http-equiv="refresh" content="0;url=' . $location . '" />';
+    echo '</noscript>';
 }
 ?>
