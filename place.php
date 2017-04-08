@@ -14,8 +14,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
         }
     }
     if ($session->isLoggedIn()) {
+        $cartTotal = $store->getCartTotal();
+        $tax = $cartTotal * .07;
+        $ship = $cartTotal * .15;
         $qry = new QueryBuilder();
-        $qry->insert_into('Orders', array('CustomerID' => $session->getUid()));
+        $qry->insert_into('Orders', array('CustomerID' => $session->getUid(), 'ShipAmount' => $ship, 'TaxAmount' => $tax));
         $qry->exec();
         $qry2 = new QueryBuilder();
         $qry2->select('OrderID')->from('Orders')->where('OrderDate', '=', "__NOW")->limit(1);

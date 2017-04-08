@@ -11,14 +11,6 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/xampp/htdocs/myguitar/classes/class.session.php</file>
-            <file>file:/C:/xampp/htdocs/myguitar/includes/head_imports_meta.php</file>
-            <file>file:/C:/xampp/htdocs/myguitar/place.php</file>
-            <file>file:/C:/xampp/htdocs/myguitar/classes/class.querybuilder.php</file>
-            <file>file:/C:/xampp/htdocs/myguitar/checkout.php</file>
-            <file>file:/C:/xampp/htdocs/myguitar/sql/myguitarshop.sql</file>
-            <file>file:/C:/xampp/htdocs/myguitar/classes/class.store.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

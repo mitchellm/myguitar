@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2017 at 06:52 AM
+-- Generation Time: Apr 08, 2017 at 01:14 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -180,6 +180,7 @@ CREATE TABLE `orderitems` (
 --
 
 INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `DiscountAmount`, `Quantity`) VALUES
+(1, 6, 2, '1199', '30', 2),
 (3, 3, 3, '2517', '1309', 1),
 (4, 3, 6, '415', '162', 1),
 (5, 4, 2, '1199', '360', 2),
@@ -189,7 +190,16 @@ INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `Discou
 (9, 7, 7, '800', '240', 1),
 (10, 7, 9, '700', '210', 1),
 (11, 8, 10, '800', '120', 1),
-(12, 9, 1, '699', '210', 1);
+(12, 9, 1, '699', '210', 1),
+(13, 6, 2, '1199', '30', 2),
+(14, 6, 2, '1199', '30', 2),
+(15, 6, 2, '1199', '30', 1),
+(16, 6, 1, '6994', '30', 1),
+(17, 6, 5, '299', '0', 1),
+(18, 30, 2, '1199', '30', 1),
+(19, 30, 4, '490', '38', 1),
+(20, 31, 1, '6994', '30', 2),
+(21, 31, 6, '415', '39', 1);
 
 -- --------------------------------------------------------
 
@@ -203,29 +213,24 @@ CREATE TABLE `orders` (
   `OrderDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ShipAmount` decimal(10,0) DEFAULT NULL,
   `TaxAmount` decimal(10,0) DEFAULT NULL,
-  `ShipDate` datetime DEFAULT NULL,
-  `ShipAddressID` int(11) DEFAULT NULL,
-  `CardType` varchar(50) DEFAULT NULL,
-  `CardNumber` char(16) DEFAULT NULL,
-  `CardExpires` char(7) DEFAULT NULL,
-  `BillingAddressID` int(11) DEFAULT NULL
+  `ShipDate` datetime DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAmount`, `ShipDate`, `ShipAddressID`, `CardType`, `CardNumber`, `CardExpires`, `BillingAddressID`) VALUES
-(3, 1, '2012-03-29 09:44:58', '10', '90', '2012-03-31 09:11:41', 1, 'Visa', '4111111111111111', '04/2014', 2),
-(4, 3, '2012-03-30 15:22:31', '5', '0', '2012-04-03 16:32:21', 4, 'American Express', '3782822463100005', '04/2013', 4),
-(5, 4, '2012-03-31 05:43:11', '5', '0', '2012-04-02 14:21:12', 5, 'Visa', '4111111111111111', '04/2016', 6),
-(6, 5, '2012-03-31 18:37:22', '5', '0', NULL, 7, 'Discover', '6011111111111117', '04/2016', 7),
-(7, 6, '2012-04-01 23:11:12', '15', '0', '2012-04-03 10:21:35', 8, 'MasterCard', '5555555555554444', '04/2016', 8),
-(8, 7, '2012-04-02 11:26:38', '5', '0', NULL, 9, 'Visa', '4012888888881881', '04/2016', 10),
-(9, 4, '2012-04-03 12:22:31', '5', '0', NULL, 5, 'Visa', '4111111111111111', '04/2016', 6),
-(10, 5, '2017-04-08 00:12:21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 5, '2017-04-08 00:12:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(12, 5, '2017-04-08 00:12:40', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAmount`, `ShipDate`) VALUES
+(3, 1, '2012-03-29 09:44:58', '10', '90', '2012-03-31 09:11:41'),
+(4, 3, '2012-03-30 15:22:31', '5', '0', '2012-04-03 16:32:21'),
+(5, 4, '2012-03-31 05:43:11', '5', '0', '2012-04-02 14:21:12'),
+(6, 5, '2012-03-31 18:37:22', '5', '0', NULL),
+(7, 6, '2012-04-01 23:11:12', '15', '0', '2012-04-03 10:21:35'),
+(8, 7, '2012-04-02 11:26:38', '5', '0', NULL),
+(9, 4, '2012-04-03 12:22:31', '5', '0', NULL),
+(29, 5, '2017-04-08 06:58:33', NULL, NULL, NULL),
+(30, 5, '2017-04-08 07:04:48', NULL, NULL, NULL),
+(31, 5, '2017-04-08 07:13:58', '2160', '1008', '2017-04-08 07:13:58');
 
 -- --------------------------------------------------------
 
@@ -264,17 +269,6 @@ INSERT INTO `products` (`ProductID`, `CategoryID`, `ProductCode`, `ProductName`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_displays`
---
-
-CREATE TABLE `product_displays` (
-  `ProductID` int(11) NOT NULL,
-  `display_path` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `sessions`
 --
 
@@ -295,8 +289,8 @@ INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
 ('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
 ('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
 ('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
-('7807d8f555c701c7c499c582acf822b6', '1491625036', 1491625036, 5),
 ('7d02708dc92e7df008e8dce6abd48cf6', '1491621715', 1491621715, 3),
+('8109e2bd929ae528995d9061d4ca18ef', '1491650590', 1491650590, 5),
 ('b4b1302393fc29bfacfb4f0a4ad3ece0', '1488193608', 1488193608, 6),
 ('df3929a2c45ffd615373a0fbfd03488b', '1488306690', 1488306690, 7);
 
@@ -344,8 +338,7 @@ ALTER TABLE `orderitems`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`OrderID`),
-  ADD KEY `CustomerID` (`CustomerID`),
-  ADD KEY `BillingAddressID` (`BillingAddressID`);
+  ADD KEY `CustomerID` (`CustomerID`);
 
 --
 -- Indexes for table `products`
@@ -377,10 +370,15 @@ ALTER TABLE `addresses`
 ALTER TABLE `customers`
   MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `orderitems`
+--
+ALTER TABLE `orderitems`
+  MODIFY `LineID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- Constraints for dumped tables
 --
