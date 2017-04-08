@@ -81,6 +81,11 @@
                     Display Banners
                 </a>
             </li>
+            <li> 
+                <a href="?request=manageAdmin">
+                    List/Add/Delete Administrators
+                </a>
+            </li>
         </ul>
     </div>
     <div class="navbar">
@@ -107,12 +112,16 @@
             </li>
         </ul>
     </div>
-
     <div class="navbar">
         <ul>
             <li> 
-                <a href="?request=manageAdmin">
-                    List/Add/Delete Administrators
+                <a href="?request=newCustomer">
+                    New Customer
+                </a>
+            </li>
+            <li> 
+                <a href="?request=newProduct">
+                    New Product
                 </a>
             </li>
         </ul>

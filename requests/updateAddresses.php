@@ -8,16 +8,16 @@
     }
 </style>
 <?php
-if (isset($_GET['order'])) {
+if (isset($_GET['address'])) {
     if (isset($_GET['delete'])) {
         $qry = new QueryBuilder();
-        $qry->delete_from('Orders')->where('OrderID', '=', $_GET['order']);
+        $qry->delete_from('Addresses')->where('AddressID', '=', $_GET['address']);
         $qry->exec();
         echo "<center>";
-        echo "Order " . $_GET['order'] . " deleted.";
+        echo "AddressID " . $_GET['address'] . " deleted.";
         echo "</ center>";
     }
 } else {
-    Utility::redirect("admincp.php?request=searchOrders");
+    Utility::redirect("admincp.php?request=searchAddresses");
 }
 ?>

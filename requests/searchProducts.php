@@ -122,13 +122,13 @@ if (isset($_POST['Search'])) {
                     <?php echo $products[$i]['image']; ?>
                 </td>
                 <td>
-                    <a href="#">
-                        CLICK TO UPDATE
+                    <a href="?request=updateProducts&product=<?php echo $products[$i]['ProductID']; ?>">
+                        UPDATE
                     </a>
                 </td>
                 <td>
-                    <a href="#">
-                        CLICK TO DELETE
+                    <a href="?request=updateProducts&delete&product=<?php echo $products[$i]['ProductID']; ?>">
+                        DELETE
                     </a>
                 </td>
             </tr>

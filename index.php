@@ -8,6 +8,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
     <head>
         <?php require_once('includes/head_imports_meta.php') ?>
+        <?php
+        if(isset($_GET['notice'])) {
+            ?>
+        <script type="text/javascript">
+            alert("<?php echo $_GET['notice'] ?>");
+        </script>
+        <?php
+        }
+        ?>
     </head>
     <body>
         <!--header-->

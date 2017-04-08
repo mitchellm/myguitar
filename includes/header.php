@@ -70,7 +70,7 @@
                                                 <?php
                                                 for ($i = 0; $i < count($piece); $i++) {
                                                     ?>
-                                                    <li><a href="products.php?prodid=<?php echo $piece[$i][1]; ?>"><?php echo $piece[$i][0]; ?></a></li>
+                                                    <li><a href="single.php?product=<?php echo $piece[$i][1]; ?>"><?php echo $piece[$i][0]; ?></a></li>
                                                     <?php
                                                 }
                                                 ?>

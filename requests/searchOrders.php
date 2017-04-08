@@ -105,8 +105,8 @@ if (isset($_POST['Search'])) {
                         </a>
                     </td>
                     <td>
-                        <a href="#">
-                            CLICK TO DELETE
+                        <a href="?request=updateOrders&delete&order=<?php echo $orders[$i]['OrderID'] ?>">
+                            DELETE
                         </a>
                     </td>
                 </tr>

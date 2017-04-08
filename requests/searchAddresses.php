@@ -124,8 +124,8 @@ if (isset($_POST['Search'])) {
                             <?php echo $addresses[$i]['Phone']; ?>
                         </td>
                         <td>
-                            <a href="#">
-                                CLICK TO DELETE
+                            <a href="?request=updateAddresses&delete&address=<?php echo $addresses[$i]['AddressID']; ?>">
+                                DELETE
                             </a>
                         </td>
                     </tr>

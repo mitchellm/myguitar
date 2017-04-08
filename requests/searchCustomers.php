@@ -108,12 +108,12 @@ if (isset($_POST['Search'])) {
                 </td>
                 <td>
                     <a href="?request=updateCustomers&customerid=<?php echo $users[$i]['CustomerID']; ?>">
-                        CLICK TO UPDATE
+                        UPDATE
                     </a>
                 </td>
                 <td>
                     <a href="?request=updateCustomers&delete&customerid=<?php echo $users[$i]['CustomerID']; ?>">
-                        CLICK TO DELETE
+                        DELETE
                     </a>
                 </td>
                 <td>
