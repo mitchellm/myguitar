@@ -7,10 +7,10 @@
     tr { border: solid thin; }
 </style>
 <?php
-if(isset($_GET['add'])) {
-   $session->setAdmin($_GET['email']);
-} else if(isset($_GET['delete'])) {
-    $session->removeAdmin($_GET['email']);
+if(isset($_POST['add'])) {
+   $session->setAdmin($_POST['email']);
+} else if(isset($_POST['delete'])) {
+    $session->removeAdmin($_POST['email']);
 }
 if ($allowAccess) {
     //array_push($return, array($image, $productid, $productname, $description, $listprice));
@@ -19,7 +19,7 @@ if ($allowAccess) {
     ?>
     <div id="search">
         <table style="margin:auto; margin-top: 30px;">
-            <form action="admincp.php?request=manageAdmin" method="get">
+            <form action="admincp.php?request=manageAdmin" method="post">
                 <tr>
                     <td>
                         New Admin Email Address (Must match existing Customer Email): 
