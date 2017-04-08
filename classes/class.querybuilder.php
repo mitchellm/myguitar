@@ -105,35 +105,44 @@ class QueryBuilder {
         $this->transition();
         return $this;
     }
-    
+
     function insert_into($table, $values) {
         $table = $this->clean($table);
         $values = $this->clean($values);
-        if($this->state == 0) {
-            $this->query .= "INSERT INTO `".$table."` ";
+        if ($this->state == 0) {
+            $this->query .= "INSERT INTO `" . $table . "` ";
             $n = count($values);
             $iteration = 0;
             $this->query .= "( ";
             $newVals = array();
-            foreach($values as $key => $val) {
+            foreach ($values as $key => $val) {
                 $newVals[] = $val;
-                if($iteration == ($n-1))
-                    $this->query .= "`".$key."`";
+                if ($iteration == ($n - 1))
+                    $this->query .= "`" . $key . "`";
                 else
-                    $this->query .= "`".$key."`, ";
+                    $this->query .= "`" . $key . "`, ";
                 $iteration++;
             }
             $this->query .= ") VALUES ( ";
             $iteration = 0;
-            for($i = 0; $i < $n; $i++) {
-                if($iteration == ($n-1))
-                    $this->query .= "'".$newVals[$i]."'";
+            for ($i = 0; $i < $n; $i++) {
+                if ($iteration == ($n - 1))
+                    $this->query .= "'" . $newVals[$i] . "'";
                 else
-                    $this->query .= "'".$newVals[$i]."', ";
+                    $this->query .= "'" . $newVals[$i] . "', ";
                 $iteration++;
             }
             $this->query .= ");";
         }
+        $this->transition();
+        return $this;
+    }
+
+    function limit($n) {
+        if ($this->state > 0) {
+            $this->query .= "LIMIT " . $n;
+        }
+        return $this;
     }
 
     function delete_from($table) {
@@ -173,10 +182,19 @@ class QueryBuilder {
             $target = "%" . $target . "%";
         }
         if ($this->state > 0) {
-            if (!$this->firstWhere) {
-                $this->query .= "WHERE `" . $field . "` " . $comparison . " '" . $target . "' ";
+            if ($target == "__NOW") {
+                $target = "NOW()";
+                if (!$this->firstWhere) {
+                    $this->query .= "WHERE `" . $field . "` " . $comparison . " " . $target . " ";
+                } else {
+                    $this->query .= "AND `" . $field . "` " . $comparison . " " . $target . " ";
+                }
             } else {
-                $this->query .= "AND `" . $field . "` " . $comparison . " '" . $target . "' ";
+                if (!$this->firstWhere) {
+                    $this->query .= "WHERE `" . $field . "` " . $comparison . " '" . $target . "' ";
+                } else {
+                    $this->query .= "AND `" . $field . "` " . $comparison . " '" . $target . "' ";
+                }
             }
         }
         $this->transition();

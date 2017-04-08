@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2017 at 03:07 AM
+-- Generation Time: Apr 08, 2017 at 06:52 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -43,7 +43,6 @@ CREATE TABLE `addresses` (
 
 INSERT INTO `addresses` (`AddressID`, `Line1`, `Line2`, `City`, `State`, `ZipCode`, `Phone`, `Disabled`) VALUES
 (1, '231 Lamar Lane', NULL, 'Jamestown', 'JA', '4342', '4785508357', 0),
-(2, '231 Lamar Lane', NULL, 'Jamestown', 'JA', '4342', '4785508357', 0),
 (3, '85 Zame Street', NULL, 'Oreant', 'LA', '777', '888888888', 0);
 
 -- --------------------------------------------------------
@@ -61,7 +60,8 @@ CREATE TABLE `administrators` (
 --
 
 INSERT INTO `administrators` (`EmailAddress`) VALUES
-('mitchell.murphy96@gmail.com');
+('mitchell.murphy96@gmail.com'),
+('root@admin.com');
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, `LastName`) VALUES
-(3, 'mitchell.murphy96@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell');
+(3, 'mitchell.murphy96@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell'),
+(4, 'poop@gmail.com', 'f3af33db76ed6fa493dd4a2e90d9767e4d1c128d', 'A', 'A'),
+(5, 'root@admin.com', '4a8b2def427a0fa35a75697761e5eaf3e2b3264b', 'Root', 'Root');
 
 -- --------------------------------------------------------
 
@@ -178,7 +180,6 @@ CREATE TABLE `orderitems` (
 --
 
 INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `DiscountAmount`, `Quantity`) VALUES
-(2, 2, 4, '490', '186', 1),
 (3, 3, 3, '2517', '1309', 1),
 (4, 3, 6, '415', '162', 1),
 (5, 4, 2, '1199', '360', 2),
@@ -199,15 +200,15 @@ INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `Discou
 CREATE TABLE `orders` (
   `OrderID` int(11) NOT NULL,
   `CustomerID` int(11) DEFAULT NULL,
-  `OrderDate` datetime NOT NULL,
-  `ShipAmount` decimal(10,0) NOT NULL,
-  `TaxAmount` decimal(10,0) NOT NULL,
+  `OrderDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ShipAmount` decimal(10,0) DEFAULT NULL,
+  `TaxAmount` decimal(10,0) DEFAULT NULL,
   `ShipDate` datetime DEFAULT NULL,
-  `ShipAddressID` int(11) NOT NULL,
-  `CardType` varchar(50) NOT NULL,
-  `CardNumber` char(16) NOT NULL,
-  `CardExpires` char(7) NOT NULL,
-  `BillingAddressID` int(11) NOT NULL
+  `ShipAddressID` int(11) DEFAULT NULL,
+  `CardType` varchar(50) DEFAULT NULL,
+  `CardNumber` char(16) DEFAULT NULL,
+  `CardExpires` char(7) DEFAULT NULL,
+  `BillingAddressID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -215,14 +216,16 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAmount`, `ShipDate`, `ShipAddressID`, `CardType`, `CardNumber`, `CardExpires`, `BillingAddressID`) VALUES
-(2, 2, '2012-03-28 11:23:20', '5', '0', '2012-03-29 12:52:14', 3, 'Visa', '4012888888881881', '08/2016', 3),
 (3, 1, '2012-03-29 09:44:58', '10', '90', '2012-03-31 09:11:41', 1, 'Visa', '4111111111111111', '04/2014', 2),
 (4, 3, '2012-03-30 15:22:31', '5', '0', '2012-04-03 16:32:21', 4, 'American Express', '3782822463100005', '04/2013', 4),
 (5, 4, '2012-03-31 05:43:11', '5', '0', '2012-04-02 14:21:12', 5, 'Visa', '4111111111111111', '04/2016', 6),
 (6, 5, '2012-03-31 18:37:22', '5', '0', NULL, 7, 'Discover', '6011111111111117', '04/2016', 7),
 (7, 6, '2012-04-01 23:11:12', '15', '0', '2012-04-03 10:21:35', 8, 'MasterCard', '5555555555554444', '04/2016', 8),
 (8, 7, '2012-04-02 11:26:38', '5', '0', NULL, 9, 'Visa', '4012888888881881', '04/2016', 10),
-(9, 4, '2012-04-03 12:22:31', '5', '0', NULL, 5, 'Visa', '4111111111111111', '04/2016', 6);
+(9, 4, '2012-04-03 12:22:31', '5', '0', NULL, 5, 'Visa', '4111111111111111', '04/2016', 6),
+(10, 5, '2017-04-08 00:12:21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 5, '2017-04-08 00:12:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 5, '2017-04-08 00:12:40', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -247,7 +250,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`ProductID`, `CategoryID`, `ProductCode`, `ProductName`, `Description`, `ListPrice`, `DiscountPercent`, `DateAdded`, `image`) VALUES
-(1, 1, 'strat', 'Fender Stratocaster', 'The Fender Stratocaster is the electric guitar design that changed the world. New features include a tinted neck, parchment pickguard and control knobs, and a \'70s-style logo. Includes select alder body, 21-fret maple neck with your choice of a rosewood or maple fretboard, 3 single-coil pickups, vintage-style tremolo, and die-cast tuning keys. This guitar features a thicker bridge block for increased sustain and a more stable point of contact with the strings. At this low price, why play anything but the real thing?\r\n\r\nFeatures:\r\n\r\n* New features:\r\n* Thicker bridge block\r\n* 3-ply parchment pick guard\r\n* Tinted neck', '699', '30', '2011-10-30 09:32:40', 'images/products/fender_strat.jpg'),
+(1, 1, 'strat', 'Fender Stratocaster', 'The Fender Stratocaster is the electric guitar design that changed the world. New features include a tinted neck, parchment pickguard and control knobs, and a \'70s-style logo. Includes select alder body, 21-fret maple neck with your choice of a rosewood or maple fretboard, 3 single-coil pickups, vintage-style tremolo, and die-cast tuning keys. This guitar features a thicker bridge block for increased sustain and a more stable point of contact with the strings. At this low price, why play anything but the real thing?\r\n\r\nFeatures:\r\n\r\n* New features:\r\n* Thicker bridge block\r\n* 3-ply parchment pick guard\r\n* Tinted neck', '6994', '30', '2011-10-30 09:32:40', 'images/products/fender_strat.jpg'),
 (2, 1, 'les_paul', 'Gibson Les Paul', 'This Les Paul guitar offers a carved top and humbucking pickups. It has a simple yet elegant design. Cutting-yet-rich tone?the hallmark of the Les Paul?pours out of the 490R and 498T Alnico II magnet humbucker pickups, which are mounted on a carved maple top with a mahogany back. The faded finish models are equipped with BurstBucker Pro pickups and a mahogany top. This guitar includes a Gibson hardshell case (Faded and satin finish models come with a gig bag) and a limited lifetime warranty.\r\n\r\nFeatures:\r\n\r\n* Carved maple top and mahogany back (Mahogany top on faded finish models)\r\n* Mahogany neck, \'59 Rounded Les Paul\r\n* Rosewood fingerboard (Ebony on Alpine white)\r\n* Tune-O-Matic bridge with stopbar\r\n* Chrome or gold hardware\r\n* 490R and 498T Alnico 2 magnet humbucker pickups (BurstBucker Pro on faded finish models)\r\n* 2 volume and 2 tone knobs, 3-way switch', '1199', '30', '2011-12-05 16:33:13', 'images/products/les_paul.jpg'),
 (3, 1, 'sg', 'Gibson SG', 'This Gibson SG electric guitar takes the best of the \'62 original and adds the longer and sturdier neck joint of the late \'60s models. All the classic features you\'d expect from a historic guitar. Hot humbuckers go from rich, sweet lightning to warm, tingling waves of sustain. A silky-fast rosewood fretboard plays like a dream. The original-style beveled mahogany body looks like a million bucks. Plus, Tune-O-Matic bridge and chrome hardware. Limited lifetime warranty. Includes hardshell case.\r\n\r\nFeatures:\r\n\r\n* Double-cutaway beveled mahogany body\r\n* Set mahogany neck with rounded \'50s profile\r\n* Bound rosewood fingerboard with trapezoid inlays\r\n* Tune-O-Matic bridge with stopbar tailpiece\r\n* Chrome hardware\r\n* 490R humbucker in the neck position\r\n* 498T humbucker in the bridge position\r\n* 2 volume knobs, 2 tone knobs, 3-way switch\r\n* 24-3/4\" scale', '2517', '52', '2012-02-04 11:04:31', 'images/products/fender_strat.jpg'),
 (4, 1, 'fg700s', 'Yamaha FG700S', 'The Yamaha FG700S solid top acoustic guitar has the ultimate combo for projection and pure tone. The expertly braced spruce top speaks clearly atop the rosewood body. It has a rosewood fingerboard, rosewood bridge, die-cast tuners, body and neck binding, and a tortoise pickguard.\r\n\r\nFeatures:\r\n\r\n* Solid Sitka spruce top\r\n* Rosewood back and sides\r\n* Rosewood fingerboard\r\n* Rosewood bridge\r\n* White/black body and neck binding\r\n* Die-cast tuners\r\n* Tortoise pickguard\r\n* Limited lifetime warranty', '490', '38', '2012-06-01 11:12:59', 'images/products/les_paul.jpg'),
@@ -289,12 +292,12 @@ CREATE TABLE `sessions` (
 INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
 ('216920d9396f372ec5122c9895049249', '1491612507', 1491612507, 1),
 ('3caf776b5b55016e7af2db2804ffd282', '1488307047', 1488307047, 8),
-('3edbb6056b6887647cd8e41c301f82b7', '1491613617', 1491613617, 3),
 ('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
 ('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
 ('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
+('7807d8f555c701c7c499c582acf822b6', '1491625036', 1491625036, 5),
+('7d02708dc92e7df008e8dce6abd48cf6', '1491621715', 1491621715, 3),
 ('b4b1302393fc29bfacfb4f0a4ad3ece0', '1488193608', 1488193608, 6),
-('d421dbd5d96633c2300850e4d92d63d6', '1491347146', 1491347146, 5),
 ('df3929a2c45ffd615373a0fbfd03488b', '1488306690', 1488306690, 7);
 
 --
@@ -372,7 +375,12 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- Constraints for dumped tables
 --
@@ -388,7 +396,7 @@ ALTER TABLE `administrators`
 --
 ALTER TABLE `orderitems`
   ADD CONSTRAINT `itemsToProduct` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
-  ADD CONSTRAINT `itemstoOrder` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`) ON DELETE CASCADE ON UPDATE SET NULL;
+  ADD CONSTRAINT `orderToItems` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `products`

@@ -72,12 +72,12 @@ class Store extends Session {
         $return = array();
         if (isset($_SESSION['cart'])) {
             foreach ($_SESSION['cart'] as $item => $quantity) {
-                $mysqli = $this->db->prepare("SELECT `ListPrice`, `ProductName`, `Description`, `ProductCode` FROM `Products` WHERE `ProductID` = ?");
+                $mysqli = $this->db->prepare("SELECT `ListPrice`, `ProductName`, `Description`, `ProductCode`, `ProductID`, `DiscountPercent` FROM `Products` WHERE `ProductID` = ?");
                 $mysqli->bind_param("i", $item);
-                $mysqli->bind_result($price, $name, $description, $productcode);
+                $mysqli->bind_result($price, $name, $description, $productcode,$productid,$discountpercent);
                 $mysqli->execute();
                 while ($mysqli->fetch()) {
-                    $return[$item] = array($price, $name, $description, $quantity, $productcode);
+                    $return[$item] = array($price, $name, $description, $quantity, $productcode, $productid, $discountpercent);
                 }
             }
         }
