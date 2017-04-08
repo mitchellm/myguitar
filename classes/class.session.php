@@ -76,7 +76,10 @@ class Session extends Utility {
             foreach ($errors AS $error) {
                 echo $error . "<br>\n";
             }
-            echo "<br />Return to the register form: <a href=\"./register.php\" class=\"boldAnchor\">here</a>";
+            if(!isset($_GET['request']))
+                echo "<br />Return to the register form: <a href=\"./register.php\" class=\"boldAnchor\">here</a>";
+            else 
+                echo "<br />Return to the register form: <a href=\"./admincp.php?request=newCustomer\" class=\"boldAnchor\">here</a>";
         } else {
             $fname = ucfirst($fname);
             $lname = ucfirst($fname);
