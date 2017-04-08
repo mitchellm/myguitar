@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2017 at 10:16 AM
+-- Generation Time: Apr 08, 2017 at 03:07 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -128,18 +128,15 @@ CREATE TABLE `customers` (
   `EmailAddress` varchar(255) NOT NULL,
   `Password` varchar(60) NOT NULL,
   `FirstName` varchar(60) NOT NULL,
-  `LastName` varchar(60) NOT NULL,
-  `ShippingAddressID` int(11) DEFAULT NULL,
-  `BillingAddressID` int(11) DEFAULT NULL
+  `LastName` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, `LastName`, `ShippingAddressID`, `BillingAddressID`) VALUES
-(1, 'mitchell.murphy96@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell', NULL, NULL),
-(2, 'm2@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell', NULL, NULL);
+INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, `LastName`) VALUES
+(3, 'mitchell.murphy96@gmail.com', '296e5205c231053ca4080da1da5b032d36146c4a', 'Mitchell', 'Mitchell');
 
 -- --------------------------------------------------------
 
@@ -181,7 +178,6 @@ CREATE TABLE `orderitems` (
 --
 
 INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `DiscountAmount`, `Quantity`) VALUES
-(1, 1, 2, '1199', '360', 1),
 (2, 2, 4, '490', '186', 1),
 (3, 3, 3, '2517', '1309', 1),
 (4, 3, 6, '415', '162', 1),
@@ -219,7 +215,6 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAmount`, `ShipDate`, `ShipAddressID`, `CardType`, `CardNumber`, `CardExpires`, `BillingAddressID`) VALUES
-(1, 1, '2012-03-28 09:40:28', '5', '32', '2012-03-30 15:32:51', 1, 'Visa', '4111111111111111', '04/2014', 2),
 (2, 2, '2012-03-28 11:23:20', '5', '0', '2012-03-29 12:52:14', 3, 'Visa', '4012888888881881', '08/2016', 3),
 (3, 1, '2012-03-29 09:44:58', '10', '90', '2012-03-31 09:11:41', 1, 'Visa', '4111111111111111', '04/2014', 2),
 (4, 3, '2012-03-30 15:22:31', '5', '0', '2012-04-03 16:32:21', 4, 'American Express', '3782822463100005', '04/2013', 4),
@@ -292,8 +287,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
-('2cb96f97adf868051f0387961f7fcbad', '1491467306', 1491467306, 1),
+('216920d9396f372ec5122c9895049249', '1491612507', 1491612507, 1),
 ('3caf776b5b55016e7af2db2804ffd282', '1488307047', 1488307047, 8),
+('3edbb6056b6887647cd8e41c301f82b7', '1491613617', 1491613617, 3),
 ('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
 ('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
 ('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
@@ -376,7 +372,7 @@ ALTER TABLE `addresses`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Constraints for dumped tables
 --
@@ -385,14 +381,14 @@ ALTER TABLE `customers`
 -- Constraints for table `administrators`
 --
 ALTER TABLE `administrators`
-  ADD CONSTRAINT `CA1` FOREIGN KEY (`EmailAddress`) REFERENCES `customers` (`EmailAddress`) ON DELETE CASCADE;
+  ADD CONSTRAINT `CA1` FOREIGN KEY (`EmailAddress`) REFERENCES `customers` (`EmailAddress`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orderitems`
 --
 ALTER TABLE `orderitems`
   ADD CONSTRAINT `itemsToProduct` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
-  ADD CONSTRAINT `itemstoOrder` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`);
+  ADD CONSTRAINT `itemstoOrder` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`) ON DELETE CASCADE ON UPDATE SET NULL;
 
 --
 -- Constraints for table `products`
