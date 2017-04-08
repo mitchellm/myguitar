@@ -287,6 +287,7 @@ class Session extends Utility {
             return "E-mail is not valid, must be name@server.tld!";
         }
         $this->db->query("INSERT INTO `Administrators` (`EmailAddress`) VALUES ('{$email}')");
+        echo "Administrator " . $email . " added.";
     }
     
     function isAdmin($email) {
@@ -309,6 +310,7 @@ class Session extends Utility {
                 return "E-mail is not valid, must be name@server.tld!";
             }
             $this->db->query("DELETE FROM `Administrators` WHERE `EmailAddress` = ('{$email}')");
+            echo "Administrator " . $email . " removed.";
         } else {
             echo "Could not remove root admin";
         }

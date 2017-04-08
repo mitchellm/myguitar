@@ -123,12 +123,12 @@ if (isset($_POST['Search'])) {
                 </td>
                 <td>
                     <a href="#">
-                        Click to update
+                        CLICK TO UPDATE
                     </a>
                 </td>
                 <td>
                     <a href="#">
-                        Click to delete
+                        CLICK TO DELETE
                     </a>
                 </td>
             </tr>

@@ -34,85 +34,85 @@
 if (isset($_POST['Search'])) {
     $qry = new QueryBuilder();
     $qry->select("*")->from('Orders');
-    foreach($search_options as $key => $val) {
+    foreach ($search_options as $key => $val) {
         $qry->where($key, "LIKE", $val);
     }
     $orders = $qry->get();
     $numOrders = count($orders);
     echo "<center>" . $qry->retrieve() . "</center>";
-?>
-<table style="margin:auto; margin-top:50px;">
-    <tr>
-        <?php
-        foreach ($orders[0] as $key => $val) {
-            ?>  
-            <th>
+    ?>
+    <table style="margin:auto; margin-top:50px;">
+        <tr>
+            <?php
+            foreach ($orders[0] as $key => $val) {
+                ?>  
+                <th>
+                    <?php
+                    echo $key;
+                    ?>
+                </th>
                 <?php
-                echo $key;
-                ?>
-            </th>
-            <?php
-        }
-        ?>
-        <th>
-            VIEW CONTENTS
-        </th>
-        <th>
-            DELETE
-        </th>
-    </tr>
-    <?php
-    for ($i = 0; $i < $numOrders; $i++) {
-        if (!isset($_POST['submit'])) {
+            }
             ?>
-            <tr>
-                <td>
-                    <?php echo $orders[$i]['OrderID']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['CustomerID']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['OrderDate']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['ShipAmount']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['TaxAmount']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['ShipDate']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['ShipAddressID']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['CardType']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['CardNumber']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['CardExpires']; ?>
-                </td>
-                <td>
-                    <?php echo $orders[$i]['BillingAddressID']; ?>
-                </td>
-                <td>
-                    <a href="?request=viewOrder&order=<?php echo $orders[$i]['OrderID']?>">
-                        View contents
-                    </a>
-                </td>
-                <td>
-                    <a href="#">
-                        Click to delete
-                    </a>
-                </td>
-            </tr>
-            <?php
+            <th>
+                VIEW CONTENTS
+            </th>
+            <th>
+                DELETE
+            </th>
+        </tr>
+        <?php
+        for ($i = 0; $i < $numOrders; $i++) {
+            if (!isset($_POST['submit'])) {
+                ?>
+                <tr>
+                    <td>
+                        <?php echo $orders[$i]['OrderID']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['CustomerID']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['OrderDate']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['ShipAmount']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['TaxAmount']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['ShipDate']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['ShipAddressID']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['CardType']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['CardNumber']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['CardExpires']; ?>
+                    </td>
+                    <td>
+                        <?php echo $orders[$i]['BillingAddressID']; ?>
+                    </td>
+                    <td>
+                        <a href="?request=viewOrder&order=<?php echo $orders[$i]['OrderID'] ?>">
+                            VIEW CONTENTS
+                        </a>
+                    </td>
+                    <td>
+                        <a href="#">
+                            CLICK TO DELETE
+                        </a>
+                    </td>
+                </tr>
+                <?php
+            }
         }
     }
-}
     ?>
 </table>

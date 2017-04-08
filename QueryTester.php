@@ -1,11 +1,12 @@
 <?php
 require_once('classes/class.querybuilder.php');
 
-$qry = new QueryBuilder();
-$qry->update('Customers')->set(array('EmailAddress', 'FirstName'), array('bil2l@gmail.com', 'Bill'))->where('CustomerID', '=', '1');
+$array = array('A' => 'B', 'B' => 'C');
+$qb = new QueryBuilder();
+
 ?>
 <pre>
 <?php
-var_dump($qry->exec());
+var_dump($qb->clean($array));
 ?>
 </pre>

@@ -71,9 +71,8 @@ if (isset($_POST['Search'])) {
      * This bit of code removes the last element of the array (the search submit)
      * then moves to 
      */
-    
     $qry->select($fields)->from('Addresses');
-    foreach($search_options as $key => $val) {
+    foreach ($search_options as $key => $val) {
         $qry->where($key, "LIKE", $val);
     }
     $addresses = $qry->get();
@@ -126,7 +125,7 @@ if (isset($_POST['Search'])) {
                         </td>
                         <td>
                             <a href="#">
-                                Click to delete
+                                CLICK TO DELETE
                             </a>
                         </td>
                     </tr>

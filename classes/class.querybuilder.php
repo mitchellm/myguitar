@@ -17,10 +17,12 @@ class QueryBuilder {
     private $query;
     private $state;
     private $db;
+    private $firstWhere;
 
     function __construct() {
         $this->db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         $this->state = 0;
+        $this->firstWhere = false;
     }
 
     /**
@@ -31,37 +33,43 @@ class QueryBuilder {
     }
 
     function clean($input) {
-        $output = $input;
         if (is_array($input)) {
-            //dothis (array)
+            $output = $input;
+            foreach ($input as $key => $val) {
+                $key = mysqli_real_escape_string($this->db, $key);
+                $val = mysqli_real_escape_string($this->db, $val);
+                $output[$key] = $val;
+            }
         } else {
-            //do this (non array)
+            $output = htmlspecialchars(mysqli_real_escape_string($this->db, $input));
         }
         return $output;
     }
-    
+
     function update($table) {
-        $what = $this->clean($table);
-        if($this->state == 0) {
-            $this->query .= "UPDATE `" .$table ."` "; 
+        $table = $this->clean($table);
+        if ($this->state == 0) {
+            $this->query .= "UPDATE `" . $table . "` ";
         }
         $this->transition();
         return $this;
     }
-    
+
     function set($column, $toVal) {
-        if($this->state > 0) {
-            if(!is_array($column) && !is_array($toVal)) {
+        $column = $this->clean($column);
+        $toVal = $this->clean($toVal);
+        if ($this->state > 0) {
+            if (!is_array($column) && !is_array($toVal)) {
                 $this->query .= "SET `" . $column . "` = '" . $toVal . "' ";
             } else {
                 $columnC = count($column);
                 $varC = count($toVal);
-                if($columnC == $varC) {
+                if ($columnC == $varC) {
                     $this->query .= "SET ";
-                    for($i = 0; $i < $varC; $i++) {
-                        if($i > 0)
+                    for ($i = 0; $i < $varC; $i++) {
+                        if ($i > 0)
                             $this->query .= ", ";
-                        $this->query .= "`".$column[$i] . "` = '" . $toVal[$i] . "' ";
+                        $this->query .= "`" . $column[$i] . "` = '" . $toVal[$i] . "' ";
                     }
                 }
             }
@@ -98,6 +106,15 @@ class QueryBuilder {
         return $this;
     }
 
+    function delete_from($table) {
+        $table = $this->clean($table);
+        if ($this->state == 0) {
+            $this->query .= "DELETE FROM `" . $table . "` ";
+        }
+        $this->transition();
+        return $this;
+    }
+
     /**
      * FROM
      */
@@ -125,14 +142,15 @@ class QueryBuilder {
         if ($comparison == "LIKE") {
             $target = "%" . $target . "%";
         }
-        if ($this->state > 1) {
-            if ($this->state > 1 && $this->state < 3) {
+        if ($this->state > 0) {
+            if (!$this->firstWhere) {
                 $this->query .= "WHERE `" . $field . "` " . $comparison . " '" . $target . "' ";
             } else {
                 $this->query .= "AND `" . $field . "` " . $comparison . " '" . $target . "' ";
             }
         }
         $this->transition();
+        $this->firstWhere = true;
         return $this;
     }
 
@@ -145,7 +163,7 @@ class QueryBuilder {
         $query_result->free();
         return $ret;
     }
-    
+
     function exec() {
         $query = $this->db->query($this->query);
         return $query;
