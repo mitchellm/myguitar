@@ -2,6 +2,7 @@
 require_once 'global.php';
 require_once __DIR__ . '/../classes/class.session.php';
 require_once __DIR__ . '/../classes/class.store.php';
+require_once __DIR__ . '/../classes/class.querybuilder.php';
 
 $session = new Session();
 $store = new Store();

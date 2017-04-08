@@ -93,7 +93,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </li>
                     </ul>
                     <div class="clearfix"></div>
-                    <a class="order" href="#">Place Order</a>
+                    <a class="order" href="place.php">Place Order</a>
                 </div>
             </div>
         </div>

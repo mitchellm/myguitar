@@ -127,9 +127,9 @@ class QueryBuilder {
             $iteration = 0;
             for($i = 0; $i < $n; $i++) {
                 if($iteration == ($n-1))
-                    $this->query .= "`".$newVals[$i]."`";
+                    $this->query .= "'".$newVals[$i]."'";
                 else
-                    $this->query .= "`".$newVals[$i]."`, ";
+                    $this->query .= "'".$newVals[$i]."', ";
                 $iteration++;
             }
             $this->query .= ");";
