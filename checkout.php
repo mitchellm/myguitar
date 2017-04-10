@@ -33,6 +33,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     if (count($cartItems) < 1) {
                         echo "<font size=\"5\">No items in cart, check out our products in the top-left navbar (under cart total) and featured listings available on our home page!</font>";
                     }
+                    $arry = array();
                     foreach ($cartItems as $pID => $item) {
                         ?>
                         <div class="cart-header2">
@@ -56,7 +57,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <div class="clearfix"></div>
                             </div>
                         </div>
-                    <?php } ?>
+                    <?php } 
+                    ?>
                 </div>
                 <div class="col-md-3 cart-total">
                     <a class="continue" href="products.php">Continue shopping</a>
