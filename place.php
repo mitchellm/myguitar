@@ -8,8 +8,13 @@ $important = substr($refer, $start, $len);
 $orderitems = array();
 if ($important == "checkout.php") {
     $cartItems = $store->getCart();
-    foreach ($cartItems as $key => $val) {
-        $orderitems[] = $val;
+    if($cartItems < 1) {
+        echo "Cart empty, check out our products in the top-left navbar and featured listings available on our home page!";
+    }
+    else {
+        foreach ($cartItems as $key => $val) {
+            $orderitems[] = $val;
+        }
     }
     if ($session->isLoggedIn()) {
         $cartTotal = $store->getCartTotal();
