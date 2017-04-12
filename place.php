@@ -38,8 +38,8 @@ if ($important == "checkout.php") {
             $qry3->insert_into('orderitems', array('OrderID' => $orderid, 'ProductID' => $productid, 'Quantity' => $quantity, 'ItemPrice' => $price, 'DiscountAmount' => $discount));
             $qry3->exec();
         }
-        Utility::redirect("index.php?notice=Order successfully placed, cart cleared.");
         $store->emptyCart();
+        Utility::redirect("index.php?notice=Order successfully placed, cart cleared.");
     } else {
         
     }

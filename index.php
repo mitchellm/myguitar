@@ -1,3 +1,7 @@
+<?php
+$refer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+?>
+
 <!--A Design by W3layouts 
 Author: W3layout
 Author URL: http://w3layouts.com
@@ -7,9 +11,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE html>
 <html>
     <head>
+         <meta name="referrer" content="no-referrer" />
         <?php require_once('includes/head_imports_meta.php') ?>
         <?php
-        if(isset($_GET['notice'])) {
+        if(isset($_GET['notice']) && strpos($refer, "index.php") == false && !is_null($refer)) {
             ?>
         <script type="text/javascript">
             alert("<?php echo $_GET['notice'] ?>");
