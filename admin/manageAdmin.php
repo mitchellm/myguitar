@@ -7,12 +7,12 @@
     tr { border: solid thin; }
 </style>
 <?php
-if(isset($_POST['add'])) {
-   $session->setAdmin($_POST['email']);
-} else if(isset($_POST['delete'])) {
-    $session->removeAdmin($_POST['email']);
-}
 if ($allowAccess) {
+    if (isset($_POST['add'])) {
+        $session->setAdmin($_POST['email']);
+    } else if (isset($_POST['delete'])) {
+        $session->removeAdmin($_POST['email']);
+    }
     //array_push($return, array($image, $productid, $productname, $description, $listprice));
     $admins = $session->getAdmins();
     $numAdmins = count($admins);

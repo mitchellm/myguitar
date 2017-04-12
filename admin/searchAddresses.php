@@ -7,6 +7,9 @@
         margin-top: 45px;
     }
 </style>
+<?php 
+if($allowAccess) {
+    ?>
 <form id="search" action="?request=searchAddresses" method="post">
     <table>
         <tr>
@@ -134,5 +137,6 @@ if (isset($_POST['Search'])) {
             }
         }
     }
+}
     ?>
 </table>
