@@ -82,7 +82,7 @@ class Session extends Utility {
                 echo "<br />Return to the register form: <a href=\"./admincp.php?request=newCustomer\" class=\"boldAnchor\">here</a>";
         } else {
             $fname = ucfirst($fname);
-            $lname = ucfirst($fname);
+            $lname = ucfirst($lname);
             $email = strtolower($email);
             $pass = Utility::secureHash($pass);
             $stmt = $this->db->prepare("INSERT INTO `customers` (`FirstName` ,`LastName` ,`EmailAddress`, `Password`)VALUES (?, ?, ?, ?)");

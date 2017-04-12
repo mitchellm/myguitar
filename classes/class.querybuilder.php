@@ -24,6 +24,10 @@ class QueryBuilder {
         $this->state = 0;
         $this->firstWhere = false;
     }
+    
+    public static function getInstance() {
+        return new QueryBuilder();
+    }
 
     /**
      * Standard increment of state

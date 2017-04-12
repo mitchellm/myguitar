@@ -85,6 +85,7 @@ class Utility {
             echo '<meta http-equiv="refresh" content="0;url=' . $location . '" />';
             echo '</noscript>';
         }
+        die();
     }
 
     static function buildAddressSearch($AddressID, $Line1, $Line2, $City, $State, $ZipCode, $Phone) {

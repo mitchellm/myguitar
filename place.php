@@ -1,6 +1,13 @@
 <?php
 
 require_once('includes/head_imports_meta.php');
+
+if ($session->isLoggedIn() == false)
+    Utility::redirect("index.php?notice=You must be logged in to place an order!");
+else if($store->hasItems() == false) {
+    Utility::redirect("index.php?notice=You don't have any items in your cart.");
+    
+}
 $refer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 $len = strlen($refer);
 $start = $len - 12;
@@ -23,7 +30,6 @@ if ($important == "checkout.php") {
         $result = $qry2->get();
         $orderid = $result[0]['OrderID'];
         foreach ($orderitems as $key => $val) {
-            die(var_dump($val[3]));
             $quantity = $val[3];
             $productid = $val[5];
             $discount = $val[6];
@@ -32,11 +38,13 @@ if ($important == "checkout.php") {
             $qry3->insert_into('orderitems', array('OrderID' => $orderid, 'ProductID' => $productid, 'Quantity' => $quantity, 'ItemPrice' => $price, 'DiscountAmount' => $discount));
             $qry3->exec();
         }
-        echo "Order successfully placed, cart cleared. You can return to the homepage here: <a href=\"index.php\">Click</a>";
+        Utility::redirect("index.php?notice=Order successfully placed, cart cleared.");
         $store->emptyCart();
+    } else {
+        
     }
 } else {
-    $location ="index.php";
+    $location = "index.php";
     echo '<script type="text/javascript">';
     echo 'window.location.href="' . $location . '";';
     echo '</script>';

@@ -83,6 +83,21 @@ class Store extends Session {
         }
         return $return;
     }
+    
+    function hasItems() {
+        if (isset($_SESSION['cart'])) {
+            foreach ($_SESSION['cart'] as $item => $quantity) {
+                $mysqli = $this->db->prepare("SELECT `ListPrice`, `ProductName`, `Description`, `ProductCode`, `ProductID`, `DiscountPercent` FROM `Products` WHERE `ProductID` = ?");
+                $mysqli->bind_param("i", $item);
+                $mysqli->bind_result($price, $name, $description, $productcode,$productid,$discountpercent);
+                $mysqli->execute();
+                $mysqli->store_result();
+                if($mysqli->num_rows > 0)
+                    return true;
+            }
+        } 
+        return false;
+    }
 
     /**
      * fetchProducts
