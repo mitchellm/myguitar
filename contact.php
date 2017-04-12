@@ -29,20 +29,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <form action="#" method="post">
                             <input type="text" value="Name" onfocus="this.value = '';" onblur="if (this.value == '') {
                                         this.value = 'Name';
-                                    }">
+                                    }" disabled>
 
                             <input type="text" value="Email" onfocus="this.value = '';" onblur="if (this.value == '') {
                                         this.value = 'Email';
-                                    }">
+                                    }" disabled>
                             <input type="text" value="Subject" onfocus="this.value = '';" onblur="if (this.value == '') {
                                         this.value = 'Subject';
-                                    }">
+                                    }" disabled>
 
                             <textarea cols="77" rows="6" value=" " onfocus="this.value = '';" onblur="if (this.value == '') {
                                         this.value = 'Message';
-                                    }">Message</textarea>
+                                    }" disabled>Message</textarea>
                             <div class="send">
-                                <input type="submit" value="Send">
+                                <input type="submit" value="Send" disabled>
                             </div>
                         </form>
                     </div>

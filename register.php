@@ -38,9 +38,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 <span>Email Address</span>
                                 <input name="email" type="text"> 
                             </div>
-                            <a class="news-letter" href="#">
-                                <label class="checkbox"><input type="checkbox" name="nl" checked=""><i> </i>Sign Up for Newsletter</label>
-                            </a>
                         </div>
                         <div class="col-md-6 register-bottom-grid">
                             <h3>Login information</h3>
