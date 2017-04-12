@@ -11,6 +11,11 @@ require_once __DIR__ . '/../includes/global.php';
  * Standard for this file
  * 
  * After every modification to query string, buffer spacing left at end of string for next update.
+ * 
+ * @SUPPORTED QUERIES:
+ * SELECT, UPDATE, DELETE, INSERT
+ * 
+ * @version 1.0.0
  */
 class QueryBuilder {
 
@@ -18,24 +23,36 @@ class QueryBuilder {
     private $state;
     private $db;
     private $firstWhere;
+    private $qryType;
 
     function __construct() {
         $this->db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         $this->state = 0;
         $this->firstWhere = false;
     }
-    
+
+    /**
+     * Returns an instance
+     * @return type $instance of QueryBuilder
+     */
     public static function getInstance() {
-        return new QueryBuilder();
+        return QueryBuilder::getInstance();
     }
 
     /**
-     * Standard increment of state
+     *  increment of state
      */
-    function transition() {
+    function transition($qryType) {
+        if (isset($qryType))
+            $this->qryType = $qryType;
         $this->state++;
     }
 
+    /**
+     * Cleans inputs
+     * @param type $input
+     * @return type cleaned $input as $output
+     */
     function clean($input) {
         if (is_array($input)) {
             $output = $input;
@@ -50,19 +67,58 @@ class QueryBuilder {
         return $output;
     }
 
+    /**
+     * Draws out beginning of SELECT statement, depending on WHAT target to select and from WHREE
+     * @param String/Array $what fields to select from table
+     * @param String $where tablename
+     * @return String $this->query 
+     */
+    function select($column) {
+        $column = $this->clean($column);
+        if ($this->state == 0) {
+            if ($column != "*") {
+                if (!is_array($column)) {
+                    $this->query .= "SELECT `" . $column . "` ";
+                } else {
+                    $this->query .= "SELECT ";
+                    $numtargets = count($column);
+                    for ($i = 0; $i < $numtargets; $i++) {
+                        if ($i < ($numtargets - 1)) {
+                            $this->query .= "`" . $column[$i] . "`, ";
+                        } else
+                            $this->query .= "`" . $column[$i] . "` ";
+                    }
+                }
+            } else {
+                $this->query .= "SELECT " . $column . " ";
+            }
+        } else {
+            throw new Exception("Select MUST be called first.");
+        }
+        $this->transition("SELECT");
+        return $this;
+    }
+
+    /**
+     * 
+     * @param type $table to update
+     * @return $this
+     */
     function update($table) {
         $table = $this->clean($table);
         if ($this->state == 0) {
             $this->query .= "UPDATE `" . $table . "` ";
+            $this->transition("UPDATE");
+        } else {
+            throw new Exception("Update MUST be called first.");
         }
-        $this->transition();
         return $this;
     }
 
     function set($column, $toVal) {
         $column = $this->clean($column);
         $toVal = $this->clean($toVal);
-        if ($this->state > 0) {
+        if ($this->state > 0 && $this->qryType == "UPDATE") {
             if (!is_array($column) && !is_array($toVal)) {
                 $this->query .= "SET `" . $column . "` = '" . $toVal . "' ";
             } else {
@@ -77,36 +133,10 @@ class QueryBuilder {
                     }
                 }
             }
-        }
-        $this->transition();
-        return $this;
-    }
-
-    /**
-     * Draws out beginning of SELECT statement, depending on WHAT target to select and from WHREE
-     * @param String/Array $what fields to select from table
-     * @param String $where tablename
-     * @return String $this->query 
-     */
-    function select($column) {
-        $column = $this->clean($column);
-        if ($this->state == 0 && $column != "*") {
-            if (!is_array($column))
-                $this->query .= "SELECT `" . $column . "` ";
-            else {
-                $this->query .= "SELECT ";
-                $numtargets = count($column);
-                for ($i = 0; $i < $numtargets; $i++) {
-                    if ($i < ($numtargets - 1))
-                        $this->query .= "`" . $column[$i] . "`, ";
-                    else
-                        $this->query .= "`" . $column[$i] . "` ";
-                }
-            }
+            $this->transition();
         } else {
-            $this->query .= "SELECT " . $column . " ";
+            throw new Exception("Set MUST be called AFTER an Update");
         }
-        $this->transition();
         return $this;
     }
 
@@ -137,8 +167,9 @@ class QueryBuilder {
                 $iteration++;
             }
             $this->query .= ");";
+        } else {
+            throw new Execption("INSERT INTO must be called first.");
         }
-        $this->transition();
         return $this;
     }
 
@@ -185,7 +216,8 @@ class QueryBuilder {
         if ($comparison == "LIKE") {
             $target = "%" . $target . "%";
         }
-        if ($this->state > 0) {
+        $allowedTypes = array('SELECT', 'UPDATE');
+        if ($this->state > 0 && in_array($this->qryType, $allowedTypes)) {
             if ($target == "__NOW") {
                 $target = "NOW()";
                 if (!$this->firstWhere) {

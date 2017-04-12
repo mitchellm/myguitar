@@ -69,11 +69,7 @@ if($allowAccess) {
 </form>
 <?php
 if (isset($_POST['Search'])) {
-    $qry = new QueryBuilder();
-    /**
-     * This bit of code removes the last element of the array (the search submit)
-     * then moves to 
-     */
+    $qry = QueryBuilder::getInstance();
     $qry->select($fields)->from('Addresses');
     foreach ($search_options as $key => $val) {
         $qry->where($key, "LIKE", $val);

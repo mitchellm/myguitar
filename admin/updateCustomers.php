@@ -13,7 +13,7 @@ if ($allowAccess) {
         if (isset($_GET['delete'])) {
             echo "<center>";
             if ($_GET['customerid'] != 3) {
-                $qry = new QueryBuilder();
+                $qry = QueryBuilder::getInstance();
                 $qry->delete_from('Customers')->where('CustomerID', '=', $_GET['customerid']);
                 $qry->exec();
                 echo "Customer " . $_GET['customerid'] . " deleted.";
@@ -22,7 +22,7 @@ if ($allowAccess) {
             }
             echo "</ center>";
         } else {
-            $query = new QueryBuilder();
+            $query = QueryBuilder::getInstance();
             $query->select(array('CustomerID', 'EmailAddress', 'FirstName', 'LastName'))->
                     from('Customers')->
                     where('CustomerID', '=', $_GET['customerid']);
@@ -80,7 +80,7 @@ if ($allowAccess) {
                     $column[] = $key;
                     $toVal[] = $val;
                 }
-                $qry = new QueryBuilder();
+                $qry = QueryBuilder::getInstance();
                 $qry->update('Customers')->
                         set($column, $toVal)->
                         where('CustomerID', '=', $_GET['customerid']);

@@ -12,7 +12,7 @@
 if ($allowAccess) {
     if (isset($_GET['address'])) {
         if (isset($_GET['delete'])) {
-            $qry = new QueryBuilder();
+            $qry = QueryBuilder::getInstance();
             $qry->delete_from('Addresses')->where('AddressID', '=', $_GET['address']);
             $qry->exec();
             echo "<center>";

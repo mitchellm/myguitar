@@ -22,10 +22,10 @@ if ($important == "checkout.php") {
         $cartTotal = $store->getCartTotal();
         $tax = $cartTotal * .07;
         $ship = $cartTotal * .15;
-        $qry = new QueryBuilder();
+        $qry = QueryBuilder::getInstance();
         $qry->insert_into('Orders', array('CustomerID' => $session->getUid(), 'ShipAmount' => $ship, 'TaxAmount' => $tax));
         $qry->exec();
-        $qry2 = new QueryBuilder();
+        $qry2 = QueryBuilder::getInstance();
         $qry2->select('OrderID')->from('Orders')->where('OrderDate', '=', "__NOW")->limit(1);
         $result = $qry2->get();
         $orderid = $result[0]['OrderID'];
@@ -34,7 +34,7 @@ if ($important == "checkout.php") {
             $productid = $val[5];
             $discount = $val[6];
             $price = $val[0];
-            $qry3 = new QueryBuilder();
+            $qry3 = QueryBuilder::getInstance();
             $qry3->insert_into('orderitems', array('OrderID' => $orderid, 'ProductID' => $productid, 'Quantity' => $quantity, 'ItemPrice' => $price, 'DiscountAmount' => $discount));
             $qry3->exec();
         }

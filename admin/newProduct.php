@@ -10,7 +10,7 @@
 <?php
 if ($allowAccess) {
     if (!isset($_POST['submit'])) {
-        $query = new QueryBuilder();
+        $query = QueryBuilder::getInstance();
         $query->select(array('CategoryName', 'CategoryID'))->from('Categories');
         $categories = $query->get();
         $n = count($categories);
@@ -111,7 +111,7 @@ if ($allowAccess) {
         </form>
         <?php
     } else {
-        $qry = new QueryBuilder();
+        $qry = QueryBuilder::getInstance();
         $qry->insert_into('Products', array('CategoryID' => $_POST['CategoryID'], 'ProductCode' => $_POST['ProductCode'],
             'ProductName' => $_POST['ProductName'], 'Description' => $_POST['Description'], 'ListPrice' => $_POST['ListPrice'],
             'DiscountPercent' => $_POST['DiscountPercent'], 'image' => $_POST['image']));

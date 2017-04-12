@@ -61,7 +61,7 @@
 </form>
 <?php
 if (isset($_POST['Search'])) {
-    $qry = new QueryBuilder();
+    $qry = QueryBuilder::getInstance();
     $qry->select("*")->from('Products');
     foreach($search_options as $key => $val) {
         $qry->where($key, "LIKE", $val);

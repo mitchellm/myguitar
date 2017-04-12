@@ -11,14 +11,14 @@
 if ($allowAccess) {
     if (isset($_GET['product'])) {
         if (isset($_GET['delete'])) {
-            $delete = new QueryBuilder();
+            $delete = QueryBuilder::getInstance();
             $delete->delete_from('Products')->where('ProductID', '=', $_GET['product']);
             $delete->exec();
             echo "<center>";
             echo "Product " . $_GET['product'] . " deleted.";
             echo "</ center>";
         } else {
-            $query = new QueryBuilder();
+            $query = QueryBuilder::getInstance();
             $query->select(array('ProductID', 'CategoryID', 'ProductCode', 'ProductName',
                         'Description', 'ListPrice', 'DiscountPercent',
                         'DateAdded', 'image'))->
@@ -114,7 +114,7 @@ if ($allowAccess) {
                     $column[] = $key;
                     $toVal[] = $val;
                 }
-                $qry = new QueryBuilder();
+                $qry = QueryBuilder::getInstance();
                 $qry->update('Products')->
                         set($column, $toVal)->
                         where('ProductID', '=', $_GET['product']);

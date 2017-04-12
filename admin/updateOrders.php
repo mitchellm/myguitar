@@ -11,7 +11,7 @@
 if ($allowAccess) {
     if (isset($_GET['order'])) {
         if (isset($_GET['delete'])) {
-            $qry = new QueryBuilder();
+            $qry = QueryBuilder::getInstance();
             $qry->delete_from('Orders')->where('OrderID', '=', $_GET['order']);
             $qry->exec();
             echo "<center>";
