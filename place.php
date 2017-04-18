@@ -9,15 +9,13 @@ $orderitems = array();
 if ($important == "checkout.php") {
     $cartItems = $store->getCart();
     $totalItems = count($cartItems);
-    if($totalItems < 1) {
-        echo "Cart empty, check out our products in the top-left navbar and featured listings available on our home page!";
     }
     else {
         foreach ($cartItems as $key => $val) {
             $orderitems[] = $val;
         }
     }
-    if ($session->isLoggedIn()) {
+    if ($session->isLoggedIn() && $totalItems > 0) {
         $cartTotal = $store->getCartTotal();
         $tax = $cartTotal * .07;
         $ship = $cartTotal * .15;
