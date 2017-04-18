@@ -93,7 +93,6 @@
                     <?php if ($session->isLoggedIn()) { ?> 
                         <li><a class="color4" href="logout.php">Logout</a></li>
                     <?php } ?>
-                    <li><a class="color6" href="contact.php">Contact</a></li>
                 </ul> 
             </div>
 

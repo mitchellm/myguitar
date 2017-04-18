@@ -171,8 +171,8 @@ class Session extends Utility {
     function clearSession($sid) {
         $sid = mysqli_real_escape_string($sid);
         $this->db->query("DELETE FROM sessions WHERE sid='{$sid}'");
-        Utility::redirect('index.php?notice=You have been logged out! Your session may have expired!');
         session_destroy();
+        Utility::redirect('index.php?notice=You have been logged out! Your session may have expired!');
     }
 
     /**

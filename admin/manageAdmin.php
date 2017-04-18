@@ -22,7 +22,7 @@ if ($allowAccess) {
             <form action="admincp.php?request=manageAdmin" method="post">
                 <tr>
                     <td>
-                        New Admin Email Address (Must match existing Customer Email): 
+                        New administrator's email:
                     </td>
                     <td>
                         <input type="text" name="email" style="width:250px;" />

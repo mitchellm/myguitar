@@ -106,7 +106,7 @@ if ($allowAccess) {
                         </td>
                         <td>
                             <a href="?request=viewAddresses&customer=<?php echo $users[$i]['CustomerID']; ?>">
-                                VIEW ADDRESSES
+                                VIEW
                             </a>
                         </td>
                         <td>
@@ -120,19 +120,17 @@ if ($allowAccess) {
                             </a>
                         </td>
                         <td>
-                            <a href="#">
                                 <?php
                                 if ($session->isAdmin($users[$i]['EmailAddress'])) {
                                     ?>
-                                    <a href="?request=manageAdmin&delete&email=<?php echo $users[$i]['EmailAddress']; ?>">REMOVE ADMIN</a>
+                                    <a href="?request=manageAdmin&delete&email=<?php echo $users[$i]['EmailAddress']; ?>">REMOVE</a>
                                     <?php
                                 } else {
                                     ?>
-                                    <a href="?request=manageAdmin&add&email=<?php echo $users[$i]['EmailAddress']; ?>">MAKE ADMIN</a>
+                                    <a href="?request=manageAdmin&add&email=<?php echo $users[$i]['EmailAddress']; ?>">GIVE</a>
                                     <?php
                                 }
                                 ?>
-                            </a>
                         </td>
                     </tr>
                     <?php
