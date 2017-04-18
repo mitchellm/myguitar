@@ -20,14 +20,17 @@
         ?>
 
         <style type="text/css">
+            html {
+                background-color:DBD6D7;
+            }
             h1 {
                 text-align: center;
                 font-size: 36px;
             }
 
             .navbar {
-                margin-top: 10px;
-                margin-bottom: 10px;
+                margin-top: 20px;
+                margin-bottom: 20px;
             }
 
             .navbar ul {
@@ -43,24 +46,29 @@
                 padding-right: 15px;
                 padding-left: 15px;
             }
+            a{
+                border-radius: 25px;
+                padding:5px;
+                margin:5px;
+            }
 
             a:link    {
                 /* Applies to all unvisited links */
                 text-decoration:  none;
                 font-weight:      bold;
-                background-color: #ddd;
-                color:            blue;
+                background-color: A7A1A2;
+                color:           white;
             } 
             a:visited {
                 /* Applies to all visited links */
                 text-decoration:  none;
                 font-weight:      bold;
-                background-color: #ddd;
-                color:            #f0f;
+                background-color: A7A1A2;
+                color:            white;
             } 
             a:hover   {
                 /* Applies to links under the pointer */
-                text-decoration:  underline;
+                text-decoration:  none;
                 font-weight:      bold;
                 background-color: blue;
                 color:            #fff;
@@ -69,9 +77,29 @@
                 /* Applies to activated links */
                 text-decoration:  underline;
                 font-weight:      bold;
-                background-color: black;
+                background-color: A7A1A2;
                 color: white;
             } 
+            input {
+                background-color: C9C3C4;
+            }
+            div#qry::before {
+                content: "SQL QUERY = {";
+                font-weight:bold;
+            }
+            
+            div#qry::after {
+                content: "}";
+                font-weight:bold;
+            }
+            
+            div#qry {
+                border: 2px solid red;
+                padding: 5px;
+                text-align: center; 
+                width: 60%;
+                margin: auto;
+            }
         </style>
     <h1>Admin Panel</h1>
     <div class="navbar">
@@ -143,8 +171,8 @@
             $toReplace = array("", "", "", "");
             $command = str_replace($toRemove, $toReplace, $command);
 
-            if (file_exists('requests/' . $command . '.php'))
-                include 'requests/' . $command . '.php';
+            if (file_exists('admin/' . $command . '.php'))
+                include 'admin/' . $command . '.php';
             else
                 printf('Error! Command ' . $command . ' not found');
         } else {

@@ -14,13 +14,13 @@ if ($allowAccess) {
         <table>
             <tr>
                 <td>
-                    CardNumber LIKE:
+                    CardNumber:
                 </td>
                 <td>
                     <input type="text" name="EmailAddress" />
                 </td>
                 <td>
-                    FirstName LIKE:
+                    FirstName:
                 </td>
                 <td>
                     <input type="text" name="FirstName" />
@@ -28,13 +28,13 @@ if ($allowAccess) {
             </tr>
             <tr>
                 <td>
-                    LastName LIKE:
+                    LastName:
                 </td>
                 <td>
                     <input type="text" name="LastName" />
                 </td>
                 <td>
-                    EmailAddress LIKE:
+                    EmailAddress:
                 </td>
                 <td>
                     <input type="text" name="EmailAddress" />
@@ -56,7 +56,7 @@ if ($allowAccess) {
         }
         $users = $qry->get();
         $numUsers = count($users);
-        echo "<center>" . $qry->retrieve() . "</center>";
+        echo "<div id=\"qry\">" . $qry->retrieve() . "</div>";
         ?>
         <table style="margin:auto; margin-top:50px;">
             <tr>

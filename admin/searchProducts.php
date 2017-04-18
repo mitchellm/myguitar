@@ -68,7 +68,7 @@ if (isset($_POST['Search'])) {
     }
     $products = $qry->get();
     $numProducts = count($products);
-    echo "<center>" . $qry->retrieve() . "</center>";
+    echo "<div id=\"qry\">" . $qry->retrieve() . "</div>";
 ?>
 <table style="margin:auto; margin-top:50px;">
     <tr>

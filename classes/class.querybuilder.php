@@ -36,13 +36,13 @@ class QueryBuilder {
      * @return type $instance of QueryBuilder
      */
     public static function getInstance() {
-        return QueryBuilder::getInstance();
+        return new QueryBuilder();
     }
 
     /**
      *  increment of state
      */
-    function transition($qryType) {
+    function transition($qryType = NULL) {
         if (isset($qryType))
             $this->qryType = $qryType;
         $this->state++;

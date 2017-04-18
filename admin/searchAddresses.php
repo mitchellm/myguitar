@@ -14,13 +14,13 @@ if($allowAccess) {
     <table>
         <tr>
             <td>
-                AddressID LIKE:
+                AddressID:
             </td>
             <td>
                 <input type="text" name="AddressID" />
             </td>
             <td>
-                Line1 LIKE:
+                Line1:
             </td>
             <td>
                 <input type="text" name="Line1" />
@@ -28,13 +28,13 @@ if($allowAccess) {
         </tr>
         <tr>
             <td>
-                Line2 LIKE:
+                Line2:
             </td>
             <td>
                 <input type="text" name="Line2" />
             </td>
             <td>
-                City LIKE:
+                City:
             </td>
             <td>
                 <input type="text" name="City" />
@@ -42,13 +42,13 @@ if($allowAccess) {
         </tr>
         <tr>
             <td>
-                State LIKE:
+                State:
             </td>
             <td>
                 <input type="text" name="State" />
             </td>
             <td>
-                ZipCode LIKE:
+                ZipCode:
             </td>
             <td>
                 <input type="text" name="ZipCode" />
@@ -56,7 +56,7 @@ if($allowAccess) {
         </tr>
         <tr>
             <td>
-                Phone LIKE:
+                Phone:
             </td>
             <td>
                 <input type="text" name="Phone" />
@@ -76,7 +76,7 @@ if (isset($_POST['Search'])) {
     }
     $addresses = $qry->get();
     $numAddresses = count($addresses);
-    echo "<center>" . $qry->retrieve() . "</center>";
+    echo "<div id=\"qry\">" . $qry->retrieve() . "</div>";
     ?>
     <table style="margin:auto; margin-top:50px;">
         <tr>

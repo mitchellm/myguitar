@@ -18,7 +18,7 @@
                 <input type="text" name="CustomerID" />
             </td>
             <td>
-                CardNumber LIKE:
+                CardNumber:
             </td>
             <td>
                 <input type="text" name="CardNumber" />
@@ -40,7 +40,7 @@ if (isset($_POST['Search'])) {
     }
     $orders = $qry->get();
     $numOrders = count($orders);
-    echo "<center>" . $qry->retrieve() . "</center>";
+    echo "<div id=\"qry\">" . $qry->retrieve() . "</div>";
     ?>
     <table style="margin:auto; margin-top:50px;">
         <tr>
