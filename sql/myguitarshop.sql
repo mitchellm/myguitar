@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2017 at 07:02 PM
+-- Generation Time: Apr 19, 2017 at 11:16 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 7.1.1
 
@@ -60,6 +60,7 @@ CREATE TABLE `administrators` (
 --
 
 INSERT INTO `administrators` (`EmailAddress`) VALUES
+('a@b.cd'),
 ('administrator@guitar.com'),
 ('mitchell.murphy96@gmail.com');
 
@@ -70,6 +71,7 @@ INSERT INTO `administrators` (`EmailAddress`) VALUES
 --
 
 CREATE TABLE `banner_news` (
+  `idx` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `body` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -78,10 +80,10 @@ CREATE TABLE `banner_news` (
 -- Dumping data for table `banner_news`
 --
 
-INSERT INTO `banner_news` (`title`, `body`) VALUES
-('Sed ut perspiciatis', 'Lorem Ipsum is not simply random text. Contrary to popular belief, It has roots in a piece of classical Latin literature from 45 BC.'),
-('There are many', 'Popular belief Contrary to , Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.'),
-('Lorem Ipsum is', 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.');
+INSERT INTO `banner_news` (`idx`, `title`, `body`) VALUES
+(1, 'We specialize in..', 'Finding the absolute best fit for our customers by knowing our instruments better than anyone else in the business.'),
+(2, 'There are many ', 'other choices, but none are as elegant as Jeeves\'.'),
+(3, 'Jeeve\'s Guitar Shop', 'The absolute best location to pick up any instrument that you could possibly want.');
 
 -- --------------------------------------------------------
 
@@ -107,19 +109,6 @@ INSERT INTO `categories` (`CategoryID`, `CategoryName`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact`
---
-
-CREATE TABLE `contact` (
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `customers`
 --
 
@@ -141,7 +130,9 @@ INSERT INTO `customers` (`CustomerID`, `EmailAddress`, `Password`, `FirstName`, 
 (6, 'administrator@guitar.com', '4a8b2def427a0fa35a75697761e5eaf3e2b3264b', 'Group', 'Project'),
 (7, 'test@project.com', 'd7835d121f3f366f2feb3e7b5900287b1bde5941', 'Test', 'Account'),
 (8, 'jj@guitar.com', '437c9e531d6ff3f02087373266a083f983dd7659', 'James', 'Rayford'),
-(9, 'jr@guitar.com', '4a8b2def427a0fa35a75697761e5eaf3e2b3264b', 'John', 'Roberts');
+(9, 'jr@guitar.com', '4a8b2def427a0fa35a75697761e5eaf3e2b3264b', 'John', 'Roberts'),
+(10, 'email@address.com', 'ea21e99993fae0e48f9975618ae7f68b8c1be9d5', 'Account', 'Name'),
+(11, 'a@b.cd', 'f3af33db76ed6fa493dd4a2e90d9767e4d1c128d', 'A', 'B');
 
 -- --------------------------------------------------------
 
@@ -153,15 +144,6 @@ CREATE TABLE `customers_addresses` (
   `CustomerID` int(11) NOT NULL,
   `AddressID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `customers_addresses`
---
-
-INSERT INTO `customers_addresses` (`CustomerID`, `AddressID`) VALUES
-(1, 1),
-(2, 3),
-(2, 1);
 
 -- --------------------------------------------------------
 
@@ -199,7 +181,9 @@ INSERT INTO `orderitems` (`LineID`, `OrderID`, `ProductID`, `ItemPrice`, `Discou
 (26, 32, 6, '415', '39', 1),
 (27, 32, 8, '500', '25', 1),
 (28, 62, 2, '1199', '30', 1),
-(29, 63, 2, '1199', '30', 1);
+(29, 63, 2, '1199', '30', 1),
+(30, 64, 2, '1199', '30', 2),
+(31, 65, 1, '6994', '30', 1);
 
 -- --------------------------------------------------------
 
@@ -257,7 +241,9 @@ INSERT INTO `orders` (`OrderID`, `CustomerID`, `OrderDate`, `ShipAmount`, `TaxAm
 (60, 6, '2017-04-12 15:04:45', '0', '0', '2017-04-12 15:04:45'),
 (61, 6, '2017-04-12 15:05:00', '0', '0', '2017-04-12 15:05:00'),
 (62, 6, '2017-04-12 15:22:53', '180', '84', '2017-04-12 15:22:53'),
-(63, 6, '2017-04-12 15:24:12', '180', '84', '2017-04-12 15:24:12');
+(63, 6, '2017-04-12 15:24:12', '180', '84', '2017-04-12 15:24:12'),
+(64, 7, '2017-04-18 13:54:53', '360', '168', '2017-04-18 13:54:53'),
+(65, 7, '2017-04-18 14:07:25', '1049', '490', '2017-04-18 14:07:25');
 
 -- --------------------------------------------------------
 
@@ -307,21 +293,6 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `sessions`
---
-
-INSERT INTO `sessions` (`sid`, `timestamp`, `lastclick`, `uid`) VALUES
-('14bd0cf0085bbd1d1fe24201316a50dd', '1492097103', 1492097103, 6),
-('216920d9396f372ec5122c9895049249', '1491612507', 1491612507, 1),
-('3cd752b44431077c660ee6f3cbe1f596', '1491931736', 1491931736, 8),
-('583456cf0cf769cf15a975595df967a3', '1488192439', 1488192439, 4),
-('5dcb43a8622c23821afda5fdcd1b5beb', '1491432767', 1491432767, 2),
-('65d608a44895ee40487b520efdc89521', '1491421387', 1491421387, 0),
-('7d02708dc92e7df008e8dce6abd48cf6', '1491621715', 1491621715, 3),
-('b026baba0a8885023cf38fd8faba5748', '1492024487', 1492024487, 5),
-('c4cd87d89d0546ed6958b7b6ae48002d', '1491934308', 1491934308, 7);
-
---
 -- Indexes for dumped tables
 --
 
@@ -339,6 +310,12 @@ ALTER TABLE `administrators`
   ADD KEY `EmailAddress` (`EmailAddress`);
 
 --
+-- Indexes for table `banner_news`
+--
+ALTER TABLE `banner_news`
+  ADD PRIMARY KEY (`idx`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -351,6 +328,13 @@ ALTER TABLE `categories`
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`CustomerID`),
   ADD UNIQUE KEY `EmailAddress` (`EmailAddress`);
+
+--
+-- Indexes for table `customers_addresses`
+--
+ALTER TABLE `customers_addresses`
+  ADD KEY `CustomerID` (`CustomerID`),
+  ADD KEY `AddressID` (`AddressID`);
 
 --
 -- Indexes for table `orderitems`
@@ -392,20 +376,25 @@ ALTER TABLE `sessions`
 ALTER TABLE `addresses`
   MODIFY `AddressID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `banner_news`
+--
+ALTER TABLE `banner_news`
+  MODIFY `idx` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `CustomerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  MODIFY `LineID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `LineID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `OrderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 --
 -- Constraints for dumped tables
 --
@@ -417,10 +406,17 @@ ALTER TABLE `administrators`
   ADD CONSTRAINT `CA1` FOREIGN KEY (`EmailAddress`) REFERENCES `customers` (`EmailAddress`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `customers_addresses`
+--
+ALTER TABLE `customers_addresses`
+  ADD CONSTRAINT `toAddress` FOREIGN KEY (`AddressID`) REFERENCES `addresses` (`AddressID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `toCustomer` FOREIGN KEY (`CustomerID`) REFERENCES `customers` (`CustomerID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `orderitems`
 --
 ALTER TABLE `orderitems`
-  ADD CONSTRAINT `itemsToProduct` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`),
+  ADD CONSTRAINT `itemsToProduct` FOREIGN KEY (`ProductID`) REFERENCES `products` (`ProductID`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `orderToItems` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -428,6 +424,12 @@ ALTER TABLE `orderitems`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `catprod` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD CONSTRAINT `toCustomerTable` FOREIGN KEY (`uid`) REFERENCES `customers` (`CustomerID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
