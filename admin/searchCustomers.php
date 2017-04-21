@@ -105,6 +105,9 @@ if ($allowAccess) {
                             <?php echo $users[$i]['LastName']; ?>
                         </td>
                         <td>
+                            <?php echo $users[$i]['Balance']; ?>
+                        </td>
+                        <td>
                             <a href="?request=viewAddresses&customer=<?php echo $users[$i]['CustomerID']; ?>">
                                 VIEW
                             </a>
