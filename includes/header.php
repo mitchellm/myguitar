@@ -50,7 +50,7 @@
     <div class="container">
         <div class="head-top">
             <div class="logo">
-                <h1><a href="index.php">Jeeve's Guitar Shop</a></h1>
+                <h1><a href="index.php">Guitar Shop</a></h1>
             </div>
             <div class=" h_menu4">
                 <ul class="memenu skyblue">	
@@ -91,6 +91,8 @@
                         <li><a class="color4" href="admincp.php">Administrator</a></li>	
                     <?php } ?>
                     <?php if ($session->isLoggedIn()) { ?> 
+                        <li><a class="color4" href="addresses.php">Addresses</a></li>
+                        <li><a class="color4" href="deposit.php">Balance: <?php echo $session->getBalance(); ?>$</a></li>
                         <li><a class="color4" href="logout.php">Logout</a></li>
                     <?php } ?>
                 </ul> 

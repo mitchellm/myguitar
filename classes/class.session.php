@@ -206,7 +206,66 @@ class Session extends Utility {
 
         return false;
     }
+    
+    function pairAddress($line1, $line2, $city, $state, $zip, $phone) {
+        $ids = array();
+        $stmtX = $this->db->prepare("SELECT `AddressID` FROM `Addresses` WHERE `line1` = ? AND `line2` = ? AND `city` = ? AND `state` = ? AND `zipcode` = ? AND `phone` = ?");
+        $stmtX->bind_param("ssssss", $line1, $line2, $city, $state, $zip, $phone);
+        $stmtX->bind_result($aid);
+        $stmtX->execute();
+        $stmtX->store_result();
+        if($stmtX->num_rows > 0) {
+            while($stmtX->fetch()) {
+                $ids[] = $aid;
+            }
+        } else {
+            $stmt = $this->db->prepare("INSERT INTO `Addresses` (`line1`, `line2`, `city`, `state`, `zipcode`, `phone`) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssss", $line1, $line2, $city, $state, $zip, $phone);
+            $stmt->execute();
+            $stmt2 = $this->db->prepare("SELECT `AddressID` FROM `Addresses` ORDER BY `AddressID` DESC LIMIT 1");
+            $stmt2->bind_result($aid);
+            $stmt2->execute();
+            $stmt2->store_result();
+            while($stmt2->fetch()) {
+                $ids[] = $aid;
+            }
+        }
+        $stmt3 = $this->db->prepare("INSERT INTO `customers_addresses` (`CustomerID`, `AddressID`) VALUES (?, ?)");
+        $uid = $this->getUid();
+        $stmt3->bind_param("ii", $uid, $ids[0]);
+        $stmt3->execute();
+        echo "<br/><h3>Address paired to account.</h3>";
+    }
+    
+    function deposit($total, $confirmTotal) {
+        if($total == $confirmTotal) {
+            $stmt = $this->db->prepare("UPDATE `Customers` SET `balance` = `balance` + ? WHERE `CustomerID` = ?");
+            $uid = $this->getUid();
+            $stmt->bind_param("di", $total, $uid);
+            $stmt->execute();
+            return true;
+        }
+    }
 
+    function hasBalance($amnt) {
+        $stmt = $this->db->prepare("SELECT * FROM `Customers` WHERE `CustomerID` = ? AND `Balance` > ?");
+        $uid = $this->getUid();
+        $stmt->bind_param("id", $uid, $amnt);
+        $stmt->execute();
+        $stmt->store_result();
+        if($stmt->num_rows > 0) {
+            return true;
+        }
+        return false;
+    }
+    
+    function reduceBalance($amnt) {
+        $stmt = $this->db->prepare("UPDATE `Customers` SET `balance` = `balance` - ? WHERE `CustomerID` = ?");
+        $uid = $this->getUid();
+        $stmt->bind_param("di", $amnt, $uid);
+        $stmt->execute();
+    }
+    
     /**
      *
      * Generates a random string with a specific length
@@ -371,6 +430,20 @@ class Session extends Utility {
             $stmt->execute();
             while ($stmt->fetch()) {
                 return $uid;
+            }
+        }
+        return false;
+    }
+    
+    function getBalance() {
+        if($this->isLoggedIn()) {
+            $stmt = $this->db->prepare("SELECT `balance` FROM Customers WHERE `CustomerID` = ?");
+            $uid = $this->getUid();
+            $stmt->bind_param("i", $uid);
+            $stmt->bind_result($balance);
+            $stmt->execute();
+            while($stmt->fetch()) {
+                return $balance;
             }
         }
         return false;
