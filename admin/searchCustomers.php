@@ -100,7 +100,7 @@ if ($allowAccess) {
                         </td>
                         <td>
                             <?php echo $users[$i]['FirstName']; ?>
-                        </td>
+                        </td>   
                         <td>
                             <?php echo $users[$i]['LastName']; ?>
                         </td>
