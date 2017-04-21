@@ -64,7 +64,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             } else {
                 if( !(isset($_POST['line1']) && isset($_POST['line2']) && isset($_POST['city']) && isset($_POST['state']) && isset($_POST['zip']) && isset($_POST['phone'])) )
                     echo "<br /><h3>Failed to properly fill out address form, go back and <a href=\"addresses.php\">try again!</a></h3>";
-                else if($_POST['line1'] == "" || $_POST['line2'] == "" || $_POST['city'] == "" || $_POST['state'] == "" || $_POST['zip'] == "" || $_POST['phone'] == "")
+                else if($_POST['line1'] == "" || $_POST['city'] == "" || $_POST['state'] == "" || $_POST['zip'] == "" || $_POST['phone'] == "")
                     echo "<br /><h3>Failed to properly fill out address form, go back and <a href=\"addresses.php\">try again!</a></h3>";
                 else 
                     $session->pairAddress($_POST['line1'], $_POST['line2'], $_POST['city'], $_POST['state'], $_POST['zip'], $_POST['phone']);

@@ -31,7 +31,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     <?php
                     $cartItems = $store->getCart();
                     if (count($cartItems) < 1) {
-                        echo "<font size=\"5\">No items in cart, check out our products in the top-left navbar (under cart total) and featured listings available on our home page!</font>";
+                        echo "<font size=\"5\">No items in cart, check out our products in the top-right navbar (under cart total) and featured listings available on our home page!</font>";
                     }
                     $arry = array();
                     foreach ($cartItems as $pID => $item) {
