@@ -16,10 +16,14 @@ $important = substr($refer, $start, $len);
 $orderitems = array();
 if ($important == "checkout.php") {
     $cartItems = $store->getCart();
-    foreach ($cartItems as $key => $val) {
-        $orderitems[] = $val;
+    $totalItems = count($cartItems);
     }
-    if ($session->isLoggedIn()) {
+    else {
+        foreach ($cartItems as $key => $val) {
+            $orderitems[] = $val;
+        }
+    }
+    if ($session->isLoggedIn() && $totalItems > 0) {
         $cartTotal = $store->getCartTotal();
         $tax = $cartTotal * .07;
         $masterTotal = $cartTotal + $tax;
